@@ -4,6 +4,7 @@
   "description": "Cloud Functions for importing Firebase Database data to Algolia",
   "dependencies": {
     "algoliasearch": "^3.22.1",
+    "bluebird": "^3.5.0",
     "firebase-admin": "^4.1.2",
     "firebase-functions": "^0.5.7",
     "yargs": "^8.0.1"

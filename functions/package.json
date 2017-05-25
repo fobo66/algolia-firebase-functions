@@ -1,15 +1,28 @@
 {
   "name": "algolia-firebase-functions",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Cloud Functions for importing Firebase Database data to Algolia",
+  "private": true,
+  "bin": {
+    "algoliaImport": "./initialImport.js"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Andrey Mukamolow",
+    "email": "fobo66@protonmail.com",
+    "url": "https://fobo66.tumblr.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fobo66/algolia-firebase-functions"
+  },
   "dependencies": {
     "algoliasearch": "^3.22.1",
-    "bluebird": "^3.5.0",
+    "es6-promisify": "^5.0.0",
     "firebase-admin": "^4.1.2",
     "firebase-functions": "^0.5.7",
     "yargs": "^8.0.1"
   },
-  "private": true,
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",

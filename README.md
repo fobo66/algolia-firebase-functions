@@ -8,11 +8,14 @@ It also has command-line tool for first-time synchronization. You can either use
 
 In your `functions` directory:
 
-``` npm i --save algolia-firebase-functions ```
+``` bash
+ npm i --save algolia-firebase-functions 
+```
 
 ## Usage
 
-To use it in your functions, first you need to set environmental variables for Algolia to get to know where to connect
+To use it in your functions, first you need to set environmental variables for Algolia to initialize connection.
+
 Open Terminal, go to your `functions` directory and input these commands:
 
 ``` bash
@@ -23,11 +26,9 @@ Then, in your functions' `index.js` file, paste the following lines:
 
 ``` js
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
 const algoliasearch = require('algoliasearch');
 const algoliaFunctions = require('algolia-firebase-functions');
 
-admin.initializeApp(functions.config().firebase);
 const algolia = algoliasearch(functions.config().algolia.app,
                               functions.config().algolia.key);
  const index = algolia.initIndex(functions.config().algolia.index);

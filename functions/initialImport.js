@@ -4,7 +4,7 @@ const argv = require('yargs')
   .option('credential', {
     alias: 'c',
     description: 'Path to your service account key .json file',
-    default: './serviceAccountKey.json',
+    default: './serviceAccountCredentialKey.json',
     demandOption: 'Without this argument script cannot read your database',
     type: 'string',
   })
@@ -42,11 +42,12 @@ const argv = require('yargs')
 
 const admin = require('firebase-admin');
 const algoliasearch = require('algoliasearch');
-const serviceAccount = require(argv.credential);
+
+const serviceAccountCredential = require(argv.credential);
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: argv.database
+  credential: admin.credential.cert(serviceAccountCredential),
+  databaseURL: argv.database,
 });
 const algolia = algoliasearch(argv.app,
                               argv.key);

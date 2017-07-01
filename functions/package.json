@@ -1,12 +1,8 @@
 {
   "name": "algolia-firebase-functions",
-  "version": "0.1.0",
-  "description": "Cloud Functions for importing Firebase Database data to Algolia",
-  "private": true,
-  "bin": {
-    "algoliaImport": "./initialImport.js"
-  },
-  "license": "MIT",
+  "version": "0.1.1",
+  "description": "Cloud Functions for sync Firebase Database with Algolia in real time",
+  "license": "Apache 2.0",
   "author": {
     "name": "Andrey Mukamolow",
     "email": "fobo66@protonmail.com",
@@ -20,8 +16,7 @@
     "algoliasearch": "^3.22.1",
     "es6-promisify": "^5.0.0",
     "firebase-admin": "^4.1.2",
-    "firebase-functions": "^0.5.7",
-    "yargs": "^8.0.1"
+    "firebase-functions": "^0.5.7"
   },
   "devDependencies": {
     "eslint": "^3.19.0",

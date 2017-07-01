@@ -1,20 +1,18 @@
 # Algolia <-> Firebase cloud functions
 
-Useful library to make your Firebase Database data easily searchable by [Algolia](https://algolia.com).
-It also has command-line tool for first-time synchronization. You can either use wizard for constructing
- simple .sh file or directly pass arguments to synchronization script.
+Useful library to keep your Firebase Database data in sync with [Algolia](https://algolia.com) for easy search.
 
 ## Installation
 
 In your `functions` directory:
 
 ``` bash
- npm i --save algolia-firebase-functions 
+ npm install --save algolia-firebase-functions 
 ```
 
 ## Usage
 
-To use it in your functions, first you need to set environmental variables for Algolia to initialize connection.
+To use this library in your Functions, first you need to set environmental variables for Algolia to initialize connection. Grab your API keys [here](https://algolia.com/dashboard) first.
 
 Open Terminal, go to your `functions` directory and input these commands:
 
@@ -25,7 +23,6 @@ firebase functions:config:set algolia.key="<YOUR-ALGOLIA-APP-PUBLIC-KEY>"
 Then, in your functions' `index.js` file, paste the following lines:
 
 ``` js
-const functions = require('firebase-functions');
 const algoliasearch = require('algoliasearch');
 const algoliaFunctions = require('algolia-firebase-functions');
 
@@ -37,3 +34,11 @@ const algolia = algoliasearch(functions.config().algolia.app,
     return algoliaFunctions.syncAlgoliaWithFirebase(index, event);
  });
 ```
+
+And redeploy your functions:
+
+```bash
+firebase deploy --only functions
+```
+
+Now, after any changes made with your references, it will be sent to Algolia, so you'll be shure that users ca search on the newest data.

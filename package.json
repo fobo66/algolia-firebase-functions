@@ -12,6 +12,9 @@
     "type": "git",
     "url": "https://github.com/fobo66/algolia-firebase-functions"
   },
+  "bugs": {
+    "url": "https://github.com/fobo66/algolia-firebase-functions/issues"
+  },
   "dependencies": {
     "algoliasearch": "^3.22.1",
     "es6-promisify": "^5.0.0",

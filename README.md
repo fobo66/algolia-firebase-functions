@@ -19,6 +19,7 @@ Open Terminal, go to your `functions` directory and input these commands:
 ``` bash
 firebase functions:config:set algolia.app="<YOUR-ALGOLIA-APP-ID>"
 firebase functions:config:set algolia.key="<YOUR-ALGOLIA-APP-PUBLIC-KEY>"
+firebase functions:config:set algolia.index="<YOUR-ALGOLIA-INDEX>"
 ```
 Then, in your functions' `index.js` file, paste the following lines:
 
@@ -30,7 +31,7 @@ const algolia = algoliasearch(functions.config().algolia.app,
                               functions.config().algolia.key);
  const index = algolia.initIndex(functions.config().algolia.index);
 
- exports.syncAlgoliaWithFirebase = functions.database.ref("/myref/{childRef}").onWrite((event) => {
+ exports.syncAlgoliaWithFirebase = functions.database.ref('/myref/{childRef}').onWrite((event) => {
     return algoliaFunctions.syncAlgoliaWithFirebase(index, event);
  });
 ```

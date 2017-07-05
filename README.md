@@ -31,9 +31,9 @@ const algolia = algoliasearch(functions.config().algolia.app,
                               functions.config().algolia.key);
  const index = algolia.initIndex(functions.config().algolia.index);
 
- exports.syncAlgoliaWithFirebase = functions.database.ref('/myref/{childRef}').onWrite((event) => {
-    return algoliaFunctions.syncAlgoliaWithFirebase(index, event);
- });
+ exports.syncAlgoliaWithFirebase = functions.database.ref('/myref/{childRef}').onWrite(
+    event => algoliaFunctions.syncAlgoliaWithFirebase(index, event);
+ );
 ```
 
 And redeploy your functions:
@@ -42,4 +42,4 @@ And redeploy your functions:
 firebase deploy --only functions
 ```
 
-Now, after any changes made with your references, it will be sent to Algolia, so you'll be shure that users ca search on the newest data.
+Now, after any changes made with your references, it will be sent to Algolia, so you'll be shure that users can search on the newest data.

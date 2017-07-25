@@ -12,14 +12,14 @@ In your `functions` directory:
 
 ## Usage
 
-To use this library in your Functions, first you need to set environmental variables for Algolia to initialize connection. Grab your API keys [here](https://algolia.com/dashboard) first.
+To use this library in your Functions, first of all you need to set environmental variables for Algolia to initialize connection. Grab your API keys [here](https://algolia.com/dashboard) first.
 
 Open Terminal, go to your `functions` directory and input these commands:
 
 ``` bash
 firebase functions:config:set algolia.app="<YOUR-ALGOLIA-APP-ID>"
 firebase functions:config:set algolia.key="<YOUR-ALGOLIA-APP-PUBLIC-KEY>"
-firebase functions:config:set algolia.index="<YOUR-ALGOLIA-INDEX>"
+firebase functions:config:set algolia.index="<YOUR-ALGOLIA-INDEX-NAME>"
 ```
 Then, in your functions' `index.js` file, paste the following lines:
 
@@ -42,4 +42,4 @@ And redeploy your functions:
 firebase deploy --only functions
 ```
 
-Now, after any changes made with your references, it will be sent to Algolia, so you'll be shure that users can search on the newest data.
+Now, after any changes made with your references, it will be sent to Algolia, so you'll be sure that users can search on the newest data.

@@ -1,5 +1,7 @@
 # Algolia <-> Firebase cloud functions
 
+[![npm](https://img.shields.io/npm/v/algolia-firebase-functions.svg)](https://www.npmjs.com/package/algolia-firebase-functions)
+
 Useful library to keep your Firebase Database data in sync with [Algolia](https://algolia.com) for easy search.
 
 ## Installation

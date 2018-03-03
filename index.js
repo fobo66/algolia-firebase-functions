@@ -12,7 +12,23 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-const promisify = require('es6-promisify');
+const { promisify } = require('es6-promisify');
+const { values, entries } = require('./values-entries-polyfill');
+
+// Cloud Functions still runs on Node.js 6.x
+Object.values = values;
+Object.entries = entries;
+
+/**
+ * If a patch updates a nested object,
+ * it's necessary to parse it to an array
+ * @param {*} dataVal - a JavaScript value from a DataSnapshot
+ * @returns {boolean} - if the object is nested or not
+ */
+const hasManyObjects = (dataVal) => {
+  const val = Object.values(dataVal);
+  return val[0] instanceof Object;
+};
 
 /**
  * Forging object for uploading to Algolia
@@ -23,9 +39,13 @@ const promisify = require('es6-promisify');
  * @param {admin.database.DataSnapshot} Child snapshot
  */
 const prepareObjectToExporting = (dataSnapshot) => {
-  const object = dataSnapshot.val();
+  const snapVal = dataSnapshot.val();
+  if (hasManyObjects(snapVal)) {
+    return Object.entries(snapVal).map(o => Object.assign({ objectID: o[0] }, o[1]));
+  }
+  const object = snapVal;
   object.objectID = dataSnapshot.key;
-  return object;
+  return [object];
 };
 
 /**
@@ -36,7 +56,7 @@ const prepareObjectToExporting = (dataSnapshot) => {
  * @param {algolia.AlgoliaIndex} Algolia index
  */
 const updateExistingOrAddNew = (dataSnapshot, index) => {
-  const saveObject = promisify(index.saveObject, index);
+  const saveObject = promisify(index.saveObjects.bind(index));
   return saveObject(prepareObjectToExporting(dataSnapshot));
 };
 
@@ -48,7 +68,7 @@ const updateExistingOrAddNew = (dataSnapshot, index) => {
  * @param {algolia.AlgoliaIndex} Algolia index
  */
 const removeObject = (dataSnapshot, index) => {
-  const deleteObject = promisify(index.deleteObject, index);
+  const deleteObject = promisify(index.deleteObjects.bind(index));
   return deleteObject(dataSnapshot.key);
 };
 

@@ -15,16 +15,20 @@
 const { promisify } = require('es6-promisify');
 const { values, entries } = require('./values-entries-polyfill');
 
+// Cloud Functions still runs on Node.js 6.x
+Object.values = values;
+Object.entries = entries;
+
 /**
  * If a patch updates a nested object,
  * it's necessary to parse it to an array
- * @param {*} snapVal - a JavaScript value from a DataSnapshot
+ * @param {*} dataVal - a JavaScript value from a DataSnapshot
  * @returns {boolean} - if the object is nested or not
  */
-const hasManyObjects = dataVal => {
+const hasManyObjects = (dataVal) => {
   const val = Object.values(dataVal);
   return val[0] instanceof Object;
-}
+};
 
 /**
  * Forging object for uploading to Algolia
@@ -34,17 +38,15 @@ const hasManyObjects = dataVal => {
  *
  * @param {admin.database.DataSnapshot} Child snapshot
  */
-const prepareObjectToExporting = dataSnapshot => {
+const prepareObjectToExporting = (dataSnapshot) => {
   const snapVal = dataSnapshot.val();
   if (hasManyObjects(snapVal)) {
-    return Object.entries(snapVal).map(o =>
-      Object.assign({ objectID: o[0] }, o[1])
-    );
+    return Object.entries(snapVal).map(o => Object.assign({ objectID: o[0] }, o[1]));
   }
   const object = snapVal;
   object.objectID = dataSnapshot.key;
   return [object];
-}
+};
 
 /**
  * Promisified version of Algolia's SDK function

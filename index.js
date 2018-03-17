@@ -13,11 +13,8 @@
 //    limitations under the License.
 
 const { promisify } = require('es6-promisify');
-const { values, entries } = require('./values-entries-polyfill');
-
-// Cloud Functions still runs on Node.js 6.x
-Object.values = values;
-Object.entries = entries;
+const { entries } = require('object.entries').implementation;
+const { values } = require('object.values').implementation;
 
 /**
  * If a patch updates a nested object,
@@ -26,7 +23,7 @@ Object.entries = entries;
  * @returns {boolean} - if the object is nested or not
  */
 const hasManyObjects = (dataVal) => {
-  const val = Object.values(dataVal);
+  const val = values(dataVal);
   return val[0] instanceof Object;
 };
 
@@ -41,7 +38,7 @@ const hasManyObjects = (dataVal) => {
 const prepareObjectToExporting = (dataSnapshot) => {
   const snapVal = dataSnapshot.val();
   if (hasManyObjects(snapVal)) {
-    return Object.entries(snapVal).map(o => Object.assign({ objectID: o[0] }, o[1]));
+    return entries(snapVal).map(o => Object.assign({ objectID: o[0] }, o[1]));
   }
   const object = snapVal;
   object.objectID = dataSnapshot.key;

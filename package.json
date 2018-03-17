@@ -1,6 +1,6 @@
 {
   "name": "algolia-firebase-functions",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Cloud Functions for sync Firebase Database with Algolia in real time",
   "license": "Apache-2.0",
   "author": {
@@ -8,10 +8,12 @@
     "email": "fobo66@protonmail.com",
     "url": "https://fobo66.tumblr.com"
   },
-  "contributors": [{
-    "name": "Yuri Oliveira",
-    "email": "yuri@matsya.io"
-  }],
+  "contributors": [
+    {
+      "name": "Yuri Oliveira",
+      "email": "yuri@matsya.io"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/fobo66/algolia-firebase-functions"
@@ -20,10 +22,12 @@
     "url": "https://github.com/fobo66/algolia-firebase-functions/issues"
   },
   "dependencies": {
-    "algoliasearch": "^3.24.12",
+    "algoliasearch": "^3.25.1",
     "es6-promisify": "^6.0.0",
-    "firebase-admin": "^5.9.1",
-    "firebase-functions": "^0.8.1"
+    "firebase-admin": "^5.11.0",
+    "firebase-functions": "^0.8.2",
+    "object.entries": "^1.0.4",
+    "object.values": "^1.0.4"
   },
   "devDependencies": {
     "eslint": "^3.19.0",

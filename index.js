@@ -33,7 +33,7 @@ const hasManyObjects = (dataVal) => {
  * If not specified, it will generate it automatically
  * To keep objects in sync, we specify objectID by ourselves
  *
- * @param {admin.database.DataSnapshot} Child snapshot
+ * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
  */
 const prepareObjectToExporting = (dataSnapshot) => {
   const snapVal = dataSnapshot.val();
@@ -49,8 +49,8 @@ const prepareObjectToExporting = (dataSnapshot) => {
  * Promisified version of Algolia's SDK function
  * Firebase Database Cloud Functions by default should return Promise object
  * So, for usability, we return Promise too
- * @param {admin.database.DataSnapshot} Child snapshot
- * @param {algolia.AlgoliaIndex} Algolia index
+ * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
+ * @param {algolia.AlgoliaIndex} index - Algolia index
  */
 const updateExistingOrAddNew = (dataSnapshot, index) => {
   const saveObject = promisify(index.saveObjects.bind(index));
@@ -61,8 +61,8 @@ const updateExistingOrAddNew = (dataSnapshot, index) => {
  * Promisified version of Algolia's SDK function
  * Firebase Database Cloud Functions by default should return Promise object
  * So, for usability, we return Promise too
- * @param {admin.database.DataSnapshot} Child snapshot
- * @param {algolia.AlgoliaIndex} Algolia index
+ * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
+ * @param {algolia.AlgoliaIndex} index - Algolia index
  */
 const removeObject = (dataSnapshot, index) => {
   const deleteObject = promisify(index.deleteObjects.bind(index));
@@ -74,13 +74,13 @@ const removeObject = (dataSnapshot, index) => {
  * and send changes to Algolia
  * Firebase Database Cloud Functions by default should return Promise object
  * So, for usability, we return Promise too
- * @param {algolia.AlgoliaIndex} Algolia index
- * @param {cloud-functions.Event<DeltaSnapshot>} Event emitted by cloud function
+ * @param {algolia.AlgoliaIndex} index - Algolia index
+ * @param {functions.Change} change - Firebase Realtime database change
  */
-exports.syncAlgoliaWithFirebase = (index, event) => {
-  if (!event.data.exists()) {
-    return removeObject(event.data, index);
+exports.syncAlgoliaWithFirebase = (index, change) => {
+  if (!change.after.exists()) {
+    return removeObject(change.before, index);
   }
 
-  return updateExistingOrAddNew(event.data, index);
+  return updateExistingOrAddNew(change.after, index);
 };

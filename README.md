@@ -4,6 +4,8 @@
 
 Useful library to keep your Firebase Database data in sync with [Algolia](https://algolia.com) for easy search.
 
+Starting from version 2.0, this library supports Cloud Functions v1.0. If you need to support beta Cloud Functions, use version 1.0.3 instead.
+
 ## Installation
 
 In your `functions` directory:
@@ -34,7 +36,7 @@ const algolia = algoliasearch(functions.config().algolia.app,
  const index = algolia.initIndex(functions.config().algolia.index);
 
  exports.syncAlgoliaWithFirebase = functions.database.ref('/myref/{childRef}').onWrite(
-    event => algoliaFunctions.syncAlgoliaWithFirebase(index, event);
+    (change, context) => algoliaFunctions.syncAlgoliaWithFirebase(index, change);
  );
 ```
 

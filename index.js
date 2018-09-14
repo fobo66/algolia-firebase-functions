@@ -12,10 +12,6 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-const { promisify } = require('es6-promisify');
-const { entries } = require('object.entries').implementation;
-const { values } = require('object.values').implementation;
-
 /**
  * If a patch updates a nested object,
  * it's necessary to parse it to an array
@@ -23,7 +19,7 @@ const { values } = require('object.values').implementation;
  * @returns {boolean} - if the object is nested or not
  */
 const hasManyObjects = (dataVal) => {
-  const val = values(dataVal);
+  const val = Object.values(dataVal);
   return val[0] instanceof Object;
 };
 
@@ -38,7 +34,7 @@ const hasManyObjects = (dataVal) => {
 const prepareObjectToExporting = (dataSnapshot) => {
   const snapVal = dataSnapshot.val();
   if (hasManyObjects(snapVal)) {
-    return entries(snapVal).map(o => Object.assign({ objectID: o[0] }, o[1]));
+    return Object.entries(snapVal).map(o => Object.assign({ objectID: o[0] }, o[1]));
   }
   const object = snapVal;
   object.objectID = dataSnapshot.key;
@@ -52,10 +48,7 @@ const prepareObjectToExporting = (dataSnapshot) => {
  * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
  * @param {algolia.AlgoliaIndex} index - Algolia index
  */
-const updateExistingOrAddNew = (dataSnapshot, index) => {
-  const saveObject = promisify(index.saveObjects.bind(index));
-  return saveObject(prepareObjectToExporting(dataSnapshot));
-};
+const updateExistingOrAddNew = (dataSnapshot, index) => index.saveObjects(prepareObjectToExporting(dataSnapshot));
 
 /**
  * Promisified version of Algolia's SDK function
@@ -65,8 +58,7 @@ const updateExistingOrAddNew = (dataSnapshot, index) => {
  * @param {algolia.AlgoliaIndex} index - Algolia index
  */
 const removeObject = (dataSnapshot, index) => {
-  const deleteObject = promisify(index.deleteObjects.bind(index));
-  return deleteObject(dataSnapshot.key);
+  return index.deleteObjects(dataSnapshot.key);
 };
 
 /**

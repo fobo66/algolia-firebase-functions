@@ -39,7 +39,7 @@ const algolia = algoliasearch(functions.config().algolia.app,
                               functions.config().algolia.key);
  const index = algolia.initIndex(functions.config().algolia.index);
 
- exports.syncAlgoliaWithFirebase = functions.database.ref('/myref/{childRef}').onWrite(
+ exports.syncAlgoliaWithFirebase = functions.firestore.document('myref/{childRef}').onWrite(
     (change, context) => algoliaFunctions.syncAlgoliaWithFirebase(index, change);
  );
 ```

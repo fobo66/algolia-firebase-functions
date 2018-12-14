@@ -1,3 +1,7 @@
+## This is a fork that i adapted to use with Cloud Firestore
+
+
+
 # Algolia <-> Firebase cloud functions
 
 [![npm](https://img.shields.io/npm/v/algolia-firebase-functions.svg)](https://www.npmjs.com/package/algolia-firebase-functions)

@@ -70,7 +70,7 @@ const removeObject = (dataSnapshot, index) => {
  * @param {functions.Change} change - Firebase Realtime database change
  */
 exports.syncAlgoliaWithFirebase = (index, change) => {
-  if (!change.after.exists()) {
+  if (!change.after.exists) {
     return removeObject(change.before, index);
   }
 

@@ -1,4 +1,5 @@
 //    Copyright 2017 Andrey Mukamolow <fobo66@protonmail.com>
+//    Forked by David Silva <d.alex.sit@hotmail.com>
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -19,60 +20,63 @@
  * @returns {boolean} - if the object is nested or not
  */
 const hasManyObjects = (dataVal) => {
-  const val = Object.values(dataVal);
-  return val[0] instanceof Object;
-};
-
-/**
- * Forging object for uploading to Algolia
- * Algolia requires "objectID" field in every object
- * If not specified, it will generate it automatically
- * To keep objects in sync, we specify objectID by ourselves
- *
- * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
- */
-const prepareObjectToExporting = (dataSnapshot) => {
-  const snapVal = dataSnapshot.val();
-  if (hasManyObjects(snapVal)) {
-    return Object.entries(snapVal).map(o => Object.assign({ objectID: o[0] }, o[1]));
-  }
-  const object = snapVal;
-  object.objectID = dataSnapshot.key;
-  return [object];
-};
-
-/**
- * Promisified version of Algolia's SDK function
- * Firebase Database Cloud Functions by default should return Promise object
- * So, for usability, we return Promise too
- * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
- * @param {algolia.AlgoliaIndex} index - Algolia index
- */
-const updateExistingOrAddNew = (dataSnapshot, index) => index.saveObjects(prepareObjectToExporting(dataSnapshot));
-
-/**
- * Promisified version of Algolia's SDK function
- * Firebase Database Cloud Functions by default should return Promise object
- * So, for usability, we return Promise too
- * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
- * @param {algolia.AlgoliaIndex} index - Algolia index
- */
-const removeObject = (dataSnapshot, index) => {
-  return index.deleteObjects(dataSnapshot.key);
-};
-
-/**
- * Determine whether it's deletion or update or insert action
- * and send changes to Algolia
- * Firebase Database Cloud Functions by default should return Promise object
- * So, for usability, we return Promise too
- * @param {algolia.AlgoliaIndex} index - Algolia index
- * @param {functions.Change} change - Firebase Realtime database change
- */
-exports.syncAlgoliaWithFirebase = (index, change) => {
-  if (!change.after.exists) {
-    return removeObject(change.before, index);
-  }
-
-  return updateExistingOrAddNew(change.after, index);
-};
+    const val = Object.keys(dataVal).map(function(key) {
+        return dataVal[key];
+    });
+    return val[0] instanceof Object;
+  };
+  
+  /**
+   * Forging object for uploading to Algolia
+   * Algolia requires "objectID" field in every object
+   * If not specified, it will generate it automatically
+   * To keep objects in sync, we specify objectID by ourselves
+   *
+   * @param {functions.firestore.DocumentSnapshot} DocumentSnapshot - Child DocumentSnapshot
+   */
+  const prepareObjectToExporting = (DocumentSnapshot) => {
+    const snapVal = DocumentSnapshot.data();
+    if (hasManyObjects(snapVal)) {
+      return Object.entries(snapVal).map(o => Object.assign({ objectID: o[0] }, o[1]));
+    }
+    const object = snapVal;
+    object.objectID = DocumentSnapshot.id;
+    return [object];
+  };
+  
+  /**
+   * Promisified version of Algolia's SDK function
+   * Firebase firestore Cloud Functions by default should return Promise object
+   * So, for usability, we return Promise too
+   * @param {functions.firestore.DataSnapshot} DocumentSnapshot - Child snapshot
+   * @param {algolia.AlgoliaIndex} index - Algolia index
+   */
+  const updateExistingOrAddNew = (DocumentSnapshot, index) => index.saveObjects(prepareObjectToExporting(DocumentSnapshot));
+  
+  /**
+   * Promisified version of Algolia's SDK function
+   * Firebase firestore Cloud Functions by default should return Promise object
+   * So, for usability, we return Promise too
+   * @param {functions.firestore.DataSnapshot} DocumentSnapshot - Child snapshot
+   * @param {algolia.AlgoliaIndex} index - Algolia index
+   */
+  const removeObject = (DocumentSnapshot, index) => {
+    return index.deleteObjects(DocumentSnapshot.key);
+  };
+  
+  /**
+   * Determine whether it's deletion or update or insert action
+   * and send changes to Algolia
+   * Firebase firestore Cloud Functions by default should return Promise object
+   * So, for usability, we return Promise too
+   * @param {algolia.AlgoliaIndex} index - Algolia index
+   * @param {functions.Change} change - Cloud Firestore change
+   */
+  exports.syncAlgoliaWithFirebase = (index, change) => {
+    if (!change.after.exists) {
+      return removeObject(change.before, index);
+    }
+  
+    return updateExistingOrAddNew(change.after, index);
+  };
+  

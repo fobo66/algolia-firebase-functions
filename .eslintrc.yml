@@ -1,3 +1,9 @@
 extends: airbnb-base
 plugins:
   - import
+env:
+  node: true
+rules:
+  max-len:
+   - warning
+   - 120 

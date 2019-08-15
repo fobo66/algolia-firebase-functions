@@ -1,8 +1,11 @@
 {
   "name": "algolia-firebase-functions",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Cloud Functions for sync Firebase Database with Algolia in real time",
   "license": "Apache-2.0",
+  "engines": {
+    "node": "8"
+  },
   "author": {
     "name": "Andrey Mukamolow",
     "email": "fobo66@protonmail.com",
@@ -19,13 +22,14 @@
     "url": "https://github.com/fobo66/algolia-firebase-functions/issues"
   },
   "dependencies": {
-    "algoliasearch": "^3.30.0",
-    "firebase-admin": "^6.0.0",
-    "firebase-functions": "^2.0.5"
+    "algoliasearch": "^3.33.0",
+    "firebase-admin": "8.3.0",
+    "firebase-functions": "^3.2.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.10.0"
+    "@types/algoliasearch": "^3.30.17",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
   }
 }

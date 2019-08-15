@@ -1,4 +1,4 @@
-//    Copyright 2017 Andrey Mukamolow <fobo66@protonmail.com>
+//    Copyright 2017 Andrey Mukamolov <fobo66@protonmail.com>
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -29,12 +29,12 @@ const hasManyObjects = (dataVal) => {
  * If not specified, it will generate it automatically
  * To keep objects in sync, we specify objectID by ourselves
  *
- * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
+ * @param {DataSnapshot} dataSnapshot - Child snapshot
  */
 const prepareObjectToExporting = (dataSnapshot) => {
   const snapVal = dataSnapshot.val();
   if (hasManyObjects(snapVal)) {
-    return Object.entries(snapVal).map(o => Object.assign({ objectID: o[0] }, o[1]));
+    return Object.entries(snapVal).map((o) => ({ objectID: o[0], ...o[1] }));
   }
   const object = snapVal;
   object.objectID = dataSnapshot.key;
@@ -42,24 +42,20 @@ const prepareObjectToExporting = (dataSnapshot) => {
 };
 
 /**
- * Promisified version of Algolia's SDK function
- * Firebase Database Cloud Functions by default should return Promise object
- * So, for usability, we return Promise too
+ * Convenience wrapper over Algolia's SDK function for saving objects
+ * 
  * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
  * @param {algolia.AlgoliaIndex} index - Algolia index
  */
 const updateExistingOrAddNew = (dataSnapshot, index) => index.saveObjects(prepareObjectToExporting(dataSnapshot));
 
 /**
- * Promisified version of Algolia's SDK function
- * Firebase Database Cloud Functions by default should return Promise object
- * So, for usability, we return Promise too
+ * Convenience wrapper over Algolia's SDK function for deletion of the objects
+ *
  * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
  * @param {algolia.AlgoliaIndex} index - Algolia index
  */
-const removeObject = (dataSnapshot, index) => {
-  return index.deleteObjects(dataSnapshot.key);
-};
+const removeObject = (dataSnapshot, index) => index.deleteObject(dataSnapshot.key);
 
 /**
  * Determine whether it's deletion or update or insert action

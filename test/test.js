@@ -11,3 +11,28 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
+
+const assert = require('assert');
+const sinon = require('sinon');
+const functions = require('firebase-functions-test')();
+
+const algoliaFirebaseFunctions = require('../index');
+
+describe('Algolia Firebase Functions', () => {
+  let fakeIndex;
+
+  before(() => {
+    fakeIndex = {
+      saveObjects: sinon.stub(),
+      deleteObject: sinon.stub(),
+    };
+  });
+
+  it('should add new objects', () => {
+    const fakeChange = functions.database.exampleDataSnapshotChange();
+
+    algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
+
+    assert(fakeIndex.saveObjects.called);
+  });
+});

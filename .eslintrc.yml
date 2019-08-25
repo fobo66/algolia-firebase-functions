@@ -5,5 +5,5 @@ env:
   node: true
 rules:
   max-len:
-   - warning
+   - 1
    - 120 

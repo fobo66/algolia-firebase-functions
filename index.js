@@ -43,7 +43,7 @@ const prepareObjectToExporting = (dataSnapshot) => {
 
 /**
  * Convenience wrapper over Algolia's SDK function for saving objects
- * 
+ *
  * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
  * @param {algolia.AlgoliaIndex} index - Algolia index
  */

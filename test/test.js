@@ -35,4 +35,17 @@ describe('Algolia Firebase Functions', () => {
 
     assert(fakeIndex.saveObjects.called);
   });
+
+  it('should delete object', () => {
+    const fakeChange = {
+      before: functions.database.exampleDataSnapshot(),
+      after: {
+        exists: () => false,
+      },
+    };
+
+    algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
+
+    assert(fakeIndex.deleteObject.called);
+  });
 });

@@ -34,7 +34,7 @@ const hasManyObjects = (dataVal) => {
 const prepareObjectToExporting = (dataSnapshot) => {
   const snapVal = dataSnapshot.val();
   if (hasManyObjects(snapVal)) {
-    return Object.entries(snapVal).map((o) => ({ objectID: o[0], ...o[1] }));
+    return Object.entries(snapVal).map(o => ({ objectID: o[0], ...o[1] }));
   }
   const object = snapVal;
   object.objectID = dataSnapshot.key;

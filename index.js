@@ -33,7 +33,7 @@ const hasManyObjects = (dataVal) => {
  */
 const prepareObjectToExporting = (id, data) => {
   if (hasManyObjects(data)) {
-    return Object.entries(data).map((o) => ({ objectID: o[0], ...o[1] }));
+    return Object.entries(data).map(o => ({ objectID: o[0], ...o[1] }));
   }
   const object = data;
   object.objectID = id;

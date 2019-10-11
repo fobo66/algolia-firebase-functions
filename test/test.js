@@ -28,7 +28,7 @@ describe('Algolia Firebase Functions', () => {
     };
   });
 
-  it('should add new objects', () => {
+  it('should add new objects from Realtime Database to index', () => {
     const fakeChange = functions.database.exampleDataSnapshotChange();
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
@@ -36,7 +36,7 @@ describe('Algolia Firebase Functions', () => {
     assert(fakeIndex.saveObjects.called);
   });
 
-  it('should delete object', () => {
+  it('should delete Realtime Database object from index', () => {
     const fakeChange = {
       before: functions.database.exampleDataSnapshot(),
       after: {
@@ -45,6 +45,27 @@ describe('Algolia Firebase Functions', () => {
     };
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
+
+    assert(fakeIndex.deleteObject.called);
+  });
+
+  it('should add new objects from Firestore to index', () => {
+    const fakeChange = functions.firestore.exampleDocumentSnapshotChange();
+
+    algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeIndex, fakeChange);
+
+    assert(fakeIndex.saveObjects.called);
+  });
+
+  it('should delete Firestore object from index', () => {
+    const fakeChange = {
+      before: functions.firestore.exampleDocumentSnapshot(),
+      after: {
+        exists: false,
+      },
+    };
+
+    algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeIndex, fakeChange);
 
     assert(fakeIndex.deleteObject.called);
   });

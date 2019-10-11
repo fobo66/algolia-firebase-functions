@@ -36,11 +36,19 @@ const algoliaFunctions = require('algolia-firebase-functions');
 
 const algolia = algoliasearch(functions.config().algolia.app,
                               functions.config().algolia.key);
- const index = algolia.initIndex(functions.config().algolia.index);
+const index = algolia.initIndex(functions.config().algolia.index);
 
- exports.syncAlgoliaWithFirebase = functions.database.ref('/myref/{childRef}').onWrite(
-    (change, context) => algoliaFunctions.syncAlgoliaWithFirebase(index, change);
- );
+exports.syncAlgoliaWithFirebase = functions.database.ref('/myref/{childRef}').onWrite(
+   (change, context) => algoliaFunctions.syncAlgoliaWithFirebase(index, change);
+);
+```
+
+If you're using [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/), you can use the following code:
+
+```js
+exports.syncAlgoliaWithFirestore = functions.firestore.document('/myDocument/{childDocument}').onWrite(
+   (change, context) => algoliaFunctions.syncAlgoliaWithFirestore(index, change);
+);
 ```
 
 And redeploy your functions:

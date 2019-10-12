@@ -29,6 +29,7 @@ const hasManyObjects = (dataVal) => {
  * If not specified, it will generate it automatically
  * To keep objects in sync, we specify objectID by ourselves
  *
+ * @param {string} id - Firebase Database key or Firestore id
  * @param {Object} data - Child snapshot's data
  */
 const prepareObjectToExporting = (id, data) => {

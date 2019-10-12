@@ -4,6 +4,8 @@ node_js:
 deploy:
   provider: npm
   email: fobo66@protonmail.com
-  on: tags
+  on: 
+    tags: true
+    branch: master
   api_key:
     secure: UoHJ5fJQ26GRMC1H8EpNEiOAu2qJXkd43XkkUHzgAc+zxl48OuKb7c7ixXFdTmHan1pO6mZQbJhke8jHFolSmzpFN04ru/mXgh7v1u3La1u7lnCTNbXd7cQ8UYxMMnocFM/TrZFDLb8t8bvLuAddE9pjEujzs2KicsMQcb9+f4Cj0Jb9GDVqKuspTm3teaj2t1gIN3bPB8IaNLK7x5tMZt17vYvJ8WDi7US9LMs7MMgPxD5xL+E2kwKRfY+TZpyJ5xaCRt0X7fm0G5FqLpEUnl9iWB3ixsPS3gZddrsu6ZImBmfZYPVGWJyQ2X5DS0msOrQ09VaBZYsm8wKR+TAHq2sF68kpGMLkEF3q0acbA9q2ouOtFvkNYo7YxFn4GICqNUAZO2AT/F1Yv87ETsGL2PAejKVGgKOi9lGwAOdJYoxkg8XwupFYRO05A3u8DyxichSXBu2FuP7c/BadfbVVBTlkxfLj3kFI4WmMJjiOSp0S5og20Qww4j3B1n58cbOAvIbugPP0nQnCoe/qPJCU6vaVCOZh7Gwxfh3WG8/7fK8buIwoYV6K0Q422zwvioJYftzMFiLJBwY4Z/VqYLR3bGGJ4A7/sgcA2u1ZXSJkWLoX9mcP0F0oTpWBGB4qfLjXMM9It3V4Hho9SXogOpGDuJXKtUFfGEikxpQJdWc3ZHw=

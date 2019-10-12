@@ -29,15 +29,15 @@ const hasManyObjects = (dataVal) => {
  * If not specified, it will generate it automatically
  * To keep objects in sync, we specify objectID by ourselves
  *
- * @param {DataSnapshot} dataSnapshot - Child snapshot
+ * @param {string} id - Firebase Database key or Firestore id
+ * @param {Object} data - Child snapshot's data
  */
-const prepareObjectToExporting = (dataSnapshot) => {
-  const snapVal = dataSnapshot.val();
-  if (hasManyObjects(snapVal)) {
-    return Object.entries(snapVal).map(o => ({ objectID: o[0], ...o[1] }));
+const prepareObjectToExporting = (id, data) => {
+  if (hasManyObjects(data)) {
+    return Object.entries(data).map(o => ({ objectID: o[0], ...o[1] }));
   }
-  const object = snapVal;
-  object.objectID = dataSnapshot.key;
+  const object = data;
+  object.objectID = id;
   return [object];
 };
 
@@ -47,15 +47,27 @@ const prepareObjectToExporting = (dataSnapshot) => {
  * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
  * @param {algolia.AlgoliaIndex} index - Algolia index
  */
-const updateExistingOrAddNew = (dataSnapshot, index) => index.saveObjects(prepareObjectToExporting(dataSnapshot));
+const updateExistingOrAddNewFirebaseDatabaseObject = (dataSnapshot, index) => index.saveObjects(
+  prepareObjectToExporting(dataSnapshot.key, dataSnapshot.val()),
+);
+
+/**
+ * Convenience wrapper over Algolia's SDK function for saving objects
+ *
+ * @param {functions.firestore.DocumentSnapshot} dataSnapshot - Child snapshot
+ * @param {algolia.AlgoliaIndex} index - Algolia index
+ */
+const updateExistingOrAddNewFirestoreObject = (dataSnapshot, index) => index.saveObjects(
+  prepareObjectToExporting(dataSnapshot.id, dataSnapshot.data()),
+);
 
 /**
  * Convenience wrapper over Algolia's SDK function for deletion of the objects
  *
- * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
+ * @param {string} id - Firebase Database key or Firestore id
  * @param {algolia.AlgoliaIndex} index - Algolia index
  */
-const removeObject = (dataSnapshot, index) => index.deleteObject(dataSnapshot.key);
+const removeObject = (id, index) => index.deleteObject(id);
 
 /**
  * Determine whether it's deletion or update or insert action
@@ -67,8 +79,22 @@ const removeObject = (dataSnapshot, index) => index.deleteObject(dataSnapshot.ke
  */
 exports.syncAlgoliaWithFirebase = (index, change) => {
   if (!change.after.exists()) {
-    return removeObject(change.before, index);
+    return removeObject(change.before.key, index);
   }
 
-  return updateExistingOrAddNew(change.after, index);
+  return updateExistingOrAddNewFirebaseDatabaseObject(change.after, index);
+};
+
+/**
+ * Determine whether it's deletion or update or insert action
+ * and send changes to Algolia
+ * @param {algolia.AlgoliaIndex} index - Algolia index
+ * @param {Change<firestore.DocumentSnapshot>} change - Firestore change
+ */
+exports.syncAlgoliaWithFirestore = (index, change) => {
+  if (!change.after.exists) {
+    return removeObject(change.before.id, index);
+  }
+
+  return updateExistingOrAddNewFirestoreObject(change.after, index);
 };

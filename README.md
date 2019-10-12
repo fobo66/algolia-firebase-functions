@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/fobo66/algolia-firebase-functions.svg?branch=master)](https://travis-ci.org/fobo66/algolia-firebase-functions)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e0db542266204846b3a47018839453f4)](https://www.codacy.com/manual/fobo66/algolia-firebase-functions?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fobo66/algolia-firebase-functions&amp;utm_campaign=Badge_Grade)
 
-Useful library to keep your Firebase Database data in sync with [Algolia](https://algolia.com) for easy search.
+Useful library to keep your Firebase Database of Firebase Cloud Firestore data in sync with [Algolia](https://algolia.com) for easy search.
 
 Starting from version 2.0, this library supports Cloud Functions v1.0. If you need to support beta Cloud Functions, use version 1.0.3 instead.
 
@@ -36,11 +36,19 @@ const algoliaFunctions = require('algolia-firebase-functions');
 
 const algolia = algoliasearch(functions.config().algolia.app,
                               functions.config().algolia.key);
- const index = algolia.initIndex(functions.config().algolia.index);
+const index = algolia.initIndex(functions.config().algolia.index);
 
- exports.syncAlgoliaWithFirebase = functions.database.ref('/myref/{childRef}').onWrite(
-    (change, context) => algoliaFunctions.syncAlgoliaWithFirebase(index, change);
- );
+exports.syncAlgoliaWithFirebase = functions.database.ref('/myref/{childRef}').onWrite(
+   (change, context) => algoliaFunctions.syncAlgoliaWithFirebase(index, change);
+);
+```
+
+If you're using [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/), you can use the following code:
+
+```js
+exports.syncAlgoliaWithFirestore = functions.firestore.document('/myDocument/{childDocument}').onWrite(
+   (change, context) => algoliaFunctions.syncAlgoliaWithFirestore(index, change);
+);
 ```
 
 And redeploy your functions:

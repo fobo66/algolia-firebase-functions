@@ -38,6 +38,6 @@
     "eslint-plugin-import": "^2.18.2",
     "firebase-functions-test": "^0.1.6",
     "mocha": "^6.2.0",
-    "sinon": "^7.4.1"
+    "sinon": "^8.0.0"
   }
 }

@@ -29,14 +29,14 @@
   "dependencies": {
     "algoliasearch": "^4.0.1",
     "firebase-admin": "8.9.2",
-    "firebase-functions": "^3.2.0"
+    "firebase-functions": "^3.3.0",
+    "sinon": "^8.1.1"
   },
   "devDependencies": {
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "firebase-functions-test": "^0.1.6",
-    "mocha": "^7.0.0",
-    "sinon": "^8.0.0"
+    "eslint-plugin-import": "^2.20.1",
+    "firebase-functions-test": "^0.1.7",
+    "mocha": "^7.0.1"
   }
 }

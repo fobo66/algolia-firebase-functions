@@ -24,7 +24,8 @@
   "scripts": {
     "lint": "eslint .",
     "ci-test": "npm install && npm run test",
-    "test": "nyc mocha --reporter spec test/test.js --exit"
+    "test": "nyc mocha --reporter spec test/test.js --exit",
+    "coverage": "nyc report --reporter=text-lcov"
   },
   "dependencies": {
     "algoliasearch": "^4.0.1",

@@ -24,7 +24,7 @@
   "scripts": {
     "lint": "eslint .",
     "ci-test": "npm install && npm run test",
-    "test": "mocha --reporter spec test/test.js --exit"
+    "test": "nyc mocha --reporter spec test/test.js --exit"
   },
   "dependencies": {
     "algoliasearch": "^4.0.1",
@@ -37,6 +37,7 @@
     "eslint-plugin-import": "^2.20.1",
     "firebase-functions-test": "^0.2.0",
     "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
     "sinon": "^9.0.2"
   }
 }

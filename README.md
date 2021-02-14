@@ -1,7 +1,7 @@
 # Algolia <-> Firebase cloud functions
 
 [![npm](https://img.shields.io/npm/v/algolia-firebase-functions.svg)](https://www.npmjs.com/package/algolia-firebase-functions)
-[![Build Status](https://travis-ci.org/fobo66/algolia-firebase-functions.svg?branch=master)](https://travis-ci.org/fobo66/algolia-firebase-functions)
+![Tests](https://github.com/fobo66/algolia-firebase-functions/workflows/Tests/badge.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e0db542266204846b3a47018839453f4)](https://www.codacy.com/manual/fobo66/algolia-firebase-functions?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fobo66/algolia-firebase-functions&amp;utm_campaign=Badge_Grade)
 
 Useful library to keep your Firebase Database of Firebase Cloud Firestore data in sync with [Algolia](https://algolia.com) for easy search.

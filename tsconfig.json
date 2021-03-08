@@ -5,5 +5,5 @@
       "moduleResolution": "node",
       "target": "es6"
     },
-    "include": ["index.ts"]
+    "files": ["index.ts"]
   }

@@ -26,7 +26,7 @@
     "build": "tsc",
     "lint": "eslint .",
     "ci-test": "npm install && npm run test",
-    "test": "npm run build && nyc mocha --reporter spec test/test.js --exit",
+    "test": "nyc mocha --reporter spec test/test.js --exit",
     "coverage": "nyc report --reporter=lcov"
   },
   "dependencies": {

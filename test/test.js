@@ -12,27 +12,26 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-import assert from 'assert';
-import { stub } from 'sinon';
-
-import { syncAlgoliaWithFirebase, syncAlgoliaWithFirestore } from '../index.ts';
-
+const assert = require('assert');
+const sinon = require('sinon');
 const functions = require('firebase-functions-test')();
+
+const algoliaFirebaseFunctions = require('../dist/index');
 
 describe('Algolia Firebase Functions', () => {
   let fakeIndex;
 
   before(() => {
     fakeIndex = {
-      saveObjects: stub(),
-      deleteObject: stub(),
+      saveObjects: sinon.stub(),
+      deleteObject: sinon.stub(),
     };
   });
 
   it('should add new objects from Realtime Database to index', () => {
     const fakeChange = functions.database.exampleDataSnapshotChange();
 
-    syncAlgoliaWithFirebase(fakeIndex, fakeChange);
+    algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
 
     assert(fakeIndex.saveObjects.called);
   });
@@ -45,7 +44,7 @@ describe('Algolia Firebase Functions', () => {
       },
     };
 
-    syncAlgoliaWithFirebase(fakeIndex, fakeChange);
+    algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
 
     assert(fakeIndex.deleteObject.called);
   });
@@ -53,7 +52,7 @@ describe('Algolia Firebase Functions', () => {
   it('should add new objects from Firestore to index', () => {
     const fakeChange = functions.firestore.exampleDocumentSnapshotChange();
 
-    syncAlgoliaWithFirestore(fakeIndex, fakeChange);
+    algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeIndex, fakeChange);
 
     assert(fakeIndex.saveObjects.called);
   });
@@ -66,7 +65,7 @@ describe('Algolia Firebase Functions', () => {
       },
     };
 
-    syncAlgoliaWithFirestore(fakeIndex, fakeChange);
+    algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeIndex, fakeChange);
 
     assert(fakeIndex.deleteObject.called);
   });

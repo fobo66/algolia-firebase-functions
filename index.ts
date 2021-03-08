@@ -12,13 +12,18 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
+import { firestore } from "firebase-admin";
+import { Change } from "firebase-functions";
+import { DataSnapshot } from "firebase-functions/lib/providers/database";
+import { SearchIndex } from "algoliasearch";
+
 /**
  * If a patch updates a nested object,
  * it's necessary to parse it to an array
  * @param {*} dataVal - a JavaScript value from a DataSnapshot
  * @returns {boolean} - if the object is nested or not
  */
-const hasManyObjects = (dataVal) => {
+const hasManyObjects = (dataVal: any): boolean => {
   const val = Object.values(dataVal);
   return val[0] instanceof Object;
 };
@@ -32,9 +37,9 @@ const hasManyObjects = (dataVal) => {
  * @param {string} id - Firebase Database key or Firestore id
  * @param {Object} data - Child snapshot's data
  */
-const prepareObjectToExporting = (id, data) => {
+const prepareObjectToExporting = (id: string, data: any) => {
   if (hasManyObjects(data)) {
-    return Object.entries(data).map((o) => ({ objectID: o[0], ...o[1] }));
+    return Object.entries(data).map((o: any) => ({ objectID: o[0], ...o[1] }));
   }
   const object = data;
   object.objectID = id;
@@ -47,7 +52,7 @@ const prepareObjectToExporting = (id, data) => {
  * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
  * @param {algolia.AlgoliaIndex} index - Algolia index
  */
-const updateExistingOrAddNewFirebaseDatabaseObject = (dataSnapshot, index) => index.saveObjects(
+const updateExistingOrAddNewFirebaseDatabaseObject = (dataSnapshot: DataSnapshot, index: SearchIndex) => index.saveObjects(
   prepareObjectToExporting(dataSnapshot.key, dataSnapshot.val()),
 );
 
@@ -55,9 +60,9 @@ const updateExistingOrAddNewFirebaseDatabaseObject = (dataSnapshot, index) => in
  * Convenience wrapper over Algolia's SDK function for saving objects
  *
  * @param {functions.firestore.DocumentSnapshot} dataSnapshot - Child snapshot
- * @param {algolia.AlgoliaIndex} index - Algolia index
+ * @param {SearchIndex} index - Algolia index
  */
-const updateExistingOrAddNewFirestoreObject = (dataSnapshot, index) => index.saveObjects(
+const updateExistingOrAddNewFirestoreObject = (dataSnapshot: firestore.DocumentSnapshot, index: SearchIndex) => index.saveObjects(
   prepareObjectToExporting(dataSnapshot.id, dataSnapshot.data()),
 );
 
@@ -65,19 +70,19 @@ const updateExistingOrAddNewFirestoreObject = (dataSnapshot, index) => index.sav
  * Convenience wrapper over Algolia's SDK function for deletion of the objects
  *
  * @param {string} id - Firebase Database key or Firestore id
- * @param {algolia.AlgoliaIndex} index - Algolia index
+ * @param {SearchIndex} index - Algolia index
  */
-const removeObject = (id, index) => index.deleteObject(id);
+const removeObject = (id: string, index: SearchIndex) => index.deleteObject(id);
 
 /**
  * Determine whether it's deletion or update or insert action
  * and send changes to Algolia
  * Firebase Database Cloud Functions by default should return Promise object
  * So, for usability, we return Promise too
- * @param {algolia.AlgoliaIndex} index - Algolia index
- * @param {functions.Change} change - Firebase Realtime database change
+ * @param {SearchIndex} index - Algolia index
+ * @param {functions.Change<DataSnapshot>} change - Firebase Realtime database change
  */
-exports.syncAlgoliaWithFirebase = (index, change) => {
+exports.syncAlgoliaWithFirebase = (index: SearchIndex, change: Change<DataSnapshot>) => {
   if (!change.after.exists()) {
     return removeObject(change.before.key, index);
   }
@@ -88,10 +93,10 @@ exports.syncAlgoliaWithFirebase = (index, change) => {
 /**
  * Determine whether it's deletion or update or insert action
  * and send changes to Algolia
- * @param {algolia.AlgoliaIndex} index - Algolia index
+ * @param {SearchIndex} index - Algolia index
  * @param {Change<firestore.DocumentSnapshot>} change - Firestore change
  */
-exports.syncAlgoliaWithFirestore = (index, change) => {
+exports.syncAlgoliaWithFirestore = (index: SearchIndex, change: Change<firestore.DocumentSnapshot>) => {
   if (!change.after.exists) {
     return removeObject(change.before.id, index);
   }

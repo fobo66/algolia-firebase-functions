@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+      "outDir": "./dist",
+      "allowJs": true,
+      "moduleResolution": "node",
+      "target": "es6"
+    },
+    "include": ["index.ts"]
+  }

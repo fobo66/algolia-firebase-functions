@@ -28,17 +28,17 @@
     "coverage": "nyc report --reporter=lcov"
   },
   "dependencies": {
-    "algoliasearch": "^4.0.1",
+    "algoliasearch": "^4.8.6",
     "firebase-admin": "9.5.0",
-    "firebase-functions": "^3.3.0"
+    "firebase-functions": "^3.13.2"
   },
   "devDependencies": {
-    "eslint": "^7.2.0",
+    "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
     "firebase-functions-test": "^0.2.0",
-    "mocha": "^8.0.1",
+    "mocha": "^8.3.1",
     "nyc": "^15.1.0",
-    "sinon": "^9.0.2"
+    "sinon": "^9.2.4"
   }
 }

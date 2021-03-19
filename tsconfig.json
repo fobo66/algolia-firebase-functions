@@ -4,6 +4,7 @@
       "allowJs": true,
       "module": "CommonJS",
       "moduleResolution": "node",
+      "types": ["node", "mocha"],
       "target": "es6"
     },
     "files": ["index.ts"]

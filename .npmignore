@@ -1,5 +1,4 @@
 .eslintrc.yml
-.travis.yml
 .editorconfig
 test/
 .github/

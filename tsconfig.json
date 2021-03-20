@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "outDir": "./dist",
+      "allowJs": true,
+      "module": "CommonJS",
+      "moduleResolution": "node",
+      "types": ["node", "mocha"],
+      "target": "es6"
+    },
+    "files": ["index.ts"],
+    "exclude": ["node_modules"]
+  }

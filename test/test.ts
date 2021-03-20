@@ -16,10 +16,10 @@ const assert = require('assert');
 const sinon = require('sinon');
 const functions = require('firebase-functions-test')();
 
-const algoliaFirebaseFunctions = require('../index');
+const algoliaFirebaseFunctions = require('../dist/index');
 
 describe('Algolia Firebase Functions', () => {
-  let fakeIndex;
+  let fakeIndex: any;
 
   before(() => {
     fakeIndex = {

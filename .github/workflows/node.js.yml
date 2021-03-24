@@ -27,9 +27,8 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    - name: Codacy Coverage Reporter
-      uses: codacy/codacy-coverage-reporter-action@0.2.0
-      with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage/lcov.info
-
+    - run: npm run coverage
+    - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage/lcov.info  --project-token  ${{ secrets.CODACY_PROJECT_TOKEN }}
+    
+    env:
+      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}

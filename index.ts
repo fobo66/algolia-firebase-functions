@@ -82,7 +82,7 @@ const removeObject = (id: string, index: SearchIndex) => index.deleteObject(id);
  * @param {SearchIndex} index - Algolia index
  * @param {functions.Change<DataSnapshot>} change - Firebase Realtime database change
  */
-exports.syncAlgoliaWithFirebase = (index: SearchIndex, change: Change<DataSnapshot>) => {
+export function syncAlgoliaWithFirebase(index: SearchIndex, change: Change<DataSnapshot>)  {
   if (!change.after.exists()) {
     return removeObject(change.before.key, index);
   }
@@ -96,7 +96,7 @@ exports.syncAlgoliaWithFirebase = (index: SearchIndex, change: Change<DataSnapsh
  * @param {SearchIndex} index - Algolia index
  * @param {Change<firestore.DocumentSnapshot>} change - Firestore change
  */
-exports.syncAlgoliaWithFirestore = (index: SearchIndex, change: Change<firestore.DocumentSnapshot>) => {
+export function syncAlgoliaWithFirestore(index: SearchIndex, change: Change<firestore.DocumentSnapshot>) {
   if (!change.after.exists) {
     return removeObject(change.before.id, index);
   }

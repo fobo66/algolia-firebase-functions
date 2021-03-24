@@ -13,12 +13,13 @@
 //    limitations under the License.
 
 import { SearchIndex } from "algoliasearch";
+import { DataSnapshot } from "firebase-functions/lib/providers/database";
 import * as sinon from "ts-sinon";
 
 const assert = require('assert');
 const functions = require('firebase-functions-test')();
 
-const algoliaFirebaseFunctions = require('../dist/index');
+import * as algoliaFirebaseFunctions from '../index';
 
 describe('Algolia Firebase Functions', () => {
   let fakeIndex: sinon.StubbedInstance<SearchIndex>;
@@ -36,12 +37,8 @@ describe('Algolia Firebase Functions', () => {
   });
 
   it('should delete Realtime Database object from index', () => {
-    const fakeChange = {
-      before: functions.database.exampleDataSnapshot(),
-      after: {
-        exists: () => false,
-      },
-    };
+    const fakeChange = functions.database.exampleDataSnapshotChange();
+    fakeChange.after = new DataSnapshot(null)
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
 
@@ -57,12 +54,7 @@ describe('Algolia Firebase Functions', () => {
   });
 
   it('should delete Firestore object from index', () => {
-    const fakeChange = {
-      before: functions.firestore.exampleDocumentSnapshot(),
-      after: {
-        exists: false,
-      },
-    };
+    const fakeChange = functions.firestore.exampleDocumentSnapshotChange();
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeIndex, fakeChange);
 

@@ -12,20 +12,19 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
+import { SearchIndex } from "algoliasearch";
+import * as sinon from "ts-sinon";
+
 const assert = require('assert');
-const sinon = require('sinon');
 const functions = require('firebase-functions-test')();
 
 const algoliaFirebaseFunctions = require('../dist/index');
 
 describe('Algolia Firebase Functions', () => {
-  let fakeIndex: any;
+  let fakeIndex: sinon.StubbedInstance<SearchIndex>;
 
   before(() => {
-    fakeIndex = {
-      saveObjects: sinon.stub(),
-      deleteObject: sinon.stub(),
-    };
+    fakeIndex = sinon.stubInterface<SearchIndex>();
   });
 
   it('should add new objects from Realtime Database to index', () => {

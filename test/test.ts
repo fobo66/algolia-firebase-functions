@@ -15,9 +15,12 @@
 import { SearchIndex } from "algoliasearch";
 import { DataSnapshot } from "firebase-functions/lib/providers/database";
 import * as sinon from "ts-sinon";
+import * as sinonChai from "sinon-chai";
+import { expect, use } from "chai";
 
-const assert = require('assert');
 const functions = require('firebase-functions-test')();
+
+use(sinonChai)
 
 import * as algoliaFirebaseFunctions from '../index';
 
@@ -33,7 +36,7 @@ describe('Algolia Firebase Functions', () => {
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
 
-    assert(fakeIndex.saveObjects.called);
+    expect(fakeIndex.saveObjects).to.have.been.called;
   });
 
   it('should delete Realtime Database object from index', () => {
@@ -42,7 +45,7 @@ describe('Algolia Firebase Functions', () => {
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
 
-    assert(fakeIndex.deleteObject.called);
+    expect(fakeIndex.deleteObject).to.have.been.called;
   });
 
   it('should add new objects from Firestore to index', () => {
@@ -50,7 +53,7 @@ describe('Algolia Firebase Functions', () => {
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeIndex, fakeChange);
 
-    assert(fakeIndex.saveObjects.called);
+    expect(fakeIndex.saveObjects).to.have.been.called;
   });
 
   it('should delete Firestore object from index', () => {
@@ -58,6 +61,6 @@ describe('Algolia Firebase Functions', () => {
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeIndex, fakeChange);
 
-    assert(fakeIndex.deleteObject.called);
+    expect(fakeIndex.deleteObject).to.have.been.called;
   });
 });

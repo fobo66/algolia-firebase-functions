@@ -37,8 +37,10 @@
     "firebase-functions": "^3.13.2"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.16",
     "@types/mocha": "^8.2.1",
     "@types/sinon": "^9.0.11",
+    "chai": "^4.3.4",
     "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
@@ -46,6 +48,7 @@
     "mocha": "^8.3.1",
     "nyc": "^15.1.0",
     "sinon": "^10.0.0",
+    "sinon-chai": "^3.6.0",
     "ts-node": "^9.1.1",
     "ts-sinon": "^2.0.1",
     "typescript": "^4.2.3"

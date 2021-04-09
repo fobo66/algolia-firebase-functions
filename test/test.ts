@@ -14,6 +14,7 @@
 
 import { SearchIndex } from "algoliasearch";
 import { DataSnapshot } from "firebase-functions/lib/providers/database";
+import { DocumentSnapshot } from "firebase-functions/lib/providers/firestore";
 import * as sinon from "ts-sinon";
 import * as sinonChai from "sinon-chai";
 import { expect, use } from "chai";
@@ -27,7 +28,7 @@ import * as algoliaFirebaseFunctions from '../index';
 describe('Algolia Firebase Functions', () => {
   let fakeIndex: sinon.StubbedInstance<SearchIndex>;
 
-  before(() => {
+  beforeEach(() => {
     fakeIndex = sinon.stubInterface<SearchIndex>();
   });
 
@@ -58,6 +59,7 @@ describe('Algolia Firebase Functions', () => {
 
   it('should delete Firestore object from index', () => {
     const fakeChange = functions.firestore.exampleDocumentSnapshotChange();
+    fakeChange.after = functions.firestore.makeDocumentSnapshot({});
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeIndex, fakeChange);
 

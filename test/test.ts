@@ -40,6 +40,22 @@ describe('Algolia Firebase Functions', () => {
     expect(fakeIndex.saveObjects).to.have.been.called;
   });
 
+  it('should add new nested objects from Realtime Database to index', () => {
+    const fakeChange = functions.database.exampleDataSnapshotChange();
+    fakeChange.after = new DataSnapshot({
+      testKey1: {
+        testValue: "test"
+      },
+      testKey2: {
+        testValue: "test"
+      }
+    })
+
+    algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
+
+    expect(fakeIndex.saveObjects).to.have.been.called;
+  });
+
   it('should delete Realtime Database object from index', () => {
     const fakeChange = functions.database.exampleDataSnapshotChange();
     fakeChange.after = new DataSnapshot(null)

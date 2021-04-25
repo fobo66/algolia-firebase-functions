@@ -14,7 +14,6 @@
 
 import { SearchIndex } from "algoliasearch";
 import { DataSnapshot } from "firebase-functions/lib/providers/database";
-import { DocumentSnapshot } from "firebase-functions/lib/providers/firestore";
 import * as sinon from "ts-sinon";
 import * as sinonChai from "sinon-chai";
 import { expect, use } from "chai";

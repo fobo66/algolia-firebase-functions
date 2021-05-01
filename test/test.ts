@@ -12,17 +12,18 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-import { SearchIndex } from "algoliasearch";
-import { DataSnapshot } from "firebase-functions/lib/providers/database";
-import * as sinon from "ts-sinon";
-import * as sinonChai from "sinon-chai";
-import { expect, use } from "chai";
+import { SearchIndex } from 'algoliasearch';
+import { DataSnapshot } from 'firebase-functions/lib/providers/database';
+import * as sinon from 'ts-sinon';
+import * as sinonChai from 'sinon-chai';
+import { expect, use } from 'chai';
 
-const functions = require('firebase-functions-test')();
+import * as functionsTest from 'firebase-functions-test';
+import * as algoliaFirebaseFunctions from '../index';
+
+const functions = functionsTest();
 
 use(sinonChai);
-
-import * as algoliaFirebaseFunctions from '../index';
 
 describe('Algolia Firebase Functions', () => {
   let fakeIndex: sinon.StubbedInstance<SearchIndex>;
@@ -43,11 +44,11 @@ describe('Algolia Firebase Functions', () => {
     const fakeChange = functions.database.exampleDataSnapshotChange();
     fakeChange.after = new DataSnapshot({
       testKey1: {
-        testValue: "test"
+        testValue: 'test',
       },
       testKey2: {
-        testValue: "test"
-      }
+        testValue: 'test',
+      },
     });
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
@@ -57,7 +58,7 @@ describe('Algolia Firebase Functions', () => {
 
   it('should delete Realtime Database object from index', () => {
     const fakeChange = functions.database.exampleDataSnapshotChange();
-    fakeChange.after = new DataSnapshot(null)
+    fakeChange.after = new DataSnapshot(null);
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
 
@@ -74,7 +75,7 @@ describe('Algolia Firebase Functions', () => {
 
   it('should delete Firestore object from index', () => {
     const fakeChange = functions.firestore.exampleDocumentSnapshotChange();
-    fakeChange.after = functions.firestore.makeDocumentSnapshot({});
+    fakeChange.after = functions.firestore.makeDocumentSnapshot({}, 'records/1234');
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeIndex, fakeChange);
 

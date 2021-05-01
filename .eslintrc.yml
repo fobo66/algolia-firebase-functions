@@ -1,6 +1,13 @@
-extends: airbnb-base
+root: true
+extends: 
+  - eslint:recommended
+  - 'plugin:@typescript-eslint/recommended'
+  - 'plugin:chai-expect/recommended'
+parser: '@typescript-eslint/parser'
 plugins:
-  - import
+  - '@typescript-eslint'
+  - chai-friendly
+  - chai-expect
 env:
   node: true
   mocha: true

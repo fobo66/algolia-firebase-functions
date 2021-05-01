@@ -12,10 +12,12 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-import { firestore } from "firebase-admin";
-import { Change } from "firebase-functions";
-import { DataSnapshot } from "firebase-functions/lib/providers/database";
-import { SearchIndex } from "algoliasearch";
+import { firestore } from 'firebase-admin';
+import { Change } from 'firebase-functions';
+import { DataSnapshot } from 'firebase-functions/lib/providers/database';
+import { SearchIndex } from 'algoliasearch';
+import { WaitablePromise } from '@algolia/client-common';
+import { ChunkedBatchResponse } from '@algolia/client-search';
 
 /**
  * If a patch updates a nested object,
@@ -52,9 +54,14 @@ const prepareObjectToExporting = (id: string, data: any) => {
  * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
  * @param {algolia.AlgoliaIndex} index - Algolia index
  */
-const updateExistingOrAddNewFirebaseDatabaseObject = (dataSnapshot: DataSnapshot, index: SearchIndex) => index.saveObjects(
-  prepareObjectToExporting(dataSnapshot.key, dataSnapshot.val()),
-);
+function updateExistingOrAddNewFirebaseDatabaseObject(
+  dataSnapshot: DataSnapshot, 
+  index: SearchIndex
+): Readonly<WaitablePromise<ChunkedBatchResponse>> {
+  return index.saveObjects(
+    prepareObjectToExporting(dataSnapshot.key, dataSnapshot.val()),
+  );
+}
 
 /**
  * Convenience wrapper over Algolia's SDK function for saving objects
@@ -62,9 +69,14 @@ const updateExistingOrAddNewFirebaseDatabaseObject = (dataSnapshot: DataSnapshot
  * @param {functions.firestore.DocumentSnapshot} dataSnapshot - Child snapshot
  * @param {SearchIndex} index - Algolia index
  */
-const updateExistingOrAddNewFirestoreObject = (dataSnapshot: firestore.DocumentSnapshot, index: SearchIndex) => index.saveObjects(
-  prepareObjectToExporting(dataSnapshot.id, dataSnapshot.data()),
-);
+function updateExistingOrAddNewFirestoreObject(
+  dataSnapshot: firestore.DocumentSnapshot,
+  index: SearchIndex
+): Readonly<WaitablePromise<ChunkedBatchResponse>> {
+    return index.saveObjects(
+      prepareObjectToExporting(dataSnapshot.id, dataSnapshot.data()),
+    );
+}
 
 /**
  * Convenience wrapper over Algolia's SDK function for deletion of the objects
@@ -88,7 +100,7 @@ export function syncAlgoliaWithFirebase(index: SearchIndex, change: Change<DataS
   }
 
   return updateExistingOrAddNewFirebaseDatabaseObject(change.after, index);
-};
+}
 
 /**
  * Determine whether it's deletion or update or insert action
@@ -102,4 +114,4 @@ export function syncAlgoliaWithFirestore(index: SearchIndex, change: Change<fire
   }
 
   return updateExistingOrAddNewFirestoreObject(change.after, index);
-};
+}

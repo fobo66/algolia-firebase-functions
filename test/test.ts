@@ -20,7 +20,7 @@ import { expect, use } from "chai";
 
 const functions = require('firebase-functions-test')();
 
-use(sinonChai)
+use(sinonChai);
 
 import * as algoliaFirebaseFunctions from '../index';
 
@@ -48,7 +48,7 @@ describe('Algolia Firebase Functions', () => {
       testKey2: {
         testValue: "test"
       }
-    })
+    });
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
 

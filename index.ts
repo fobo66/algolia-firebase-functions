@@ -25,7 +25,7 @@ import { ChunkedBatchResponse } from '@algolia/client-search';
  * @param {*} dataVal - a JavaScript value from a DataSnapshot
  * @returns {boolean} - if the object is nested or not
  */
-const hasManyObjects = (dataVal: any): boolean => {
+const hasManyObjects = (dataVal: unknown): boolean => {
   const val = Object.values(dataVal);
   return val[0] instanceof Object;
 };
@@ -39,9 +39,10 @@ const hasManyObjects = (dataVal: any): boolean => {
  * @param {string} id - Firebase Database key or Firestore id
  * @param {Object} data - Child snapshot's data
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const prepareObjectToExporting = (id: string, data: any) => {
   if (hasManyObjects(data)) {
-    return Object.entries(data).map((o: any) => ({ objectID: o[0], ...o[1] }));
+    return Object.entries(data).map((o: unknown) => ({ objectID: o[0], ...o[1] }));
   }
   const object = data;
   object.objectID = id;
@@ -94,7 +95,9 @@ const removeObject = (id: string, index: SearchIndex) => index.deleteObject(id);
  * @param {SearchIndex} index - Algolia index
  * @param {functions.Change<DataSnapshot>} change - Firebase Realtime database change
  */
-export function syncAlgoliaWithFirebase(index: SearchIndex, change: Change<DataSnapshot>)  {
+export function syncAlgoliaWithFirebase(
+  index: SearchIndex, 
+  change: Change<DataSnapshot>): Readonly<WaitablePromise<unknown>>  {
   if (!change.after.exists()) {
     return removeObject(change.before.key, index);
   }
@@ -108,7 +111,9 @@ export function syncAlgoliaWithFirebase(index: SearchIndex, change: Change<DataS
  * @param {SearchIndex} index - Algolia index
  * @param {Change<firestore.DocumentSnapshot>} change - Firestore change
  */
-export function syncAlgoliaWithFirestore(index: SearchIndex, change: Change<firestore.DocumentSnapshot>) {
+export function syncAlgoliaWithFirestore(
+  index: SearchIndex,
+   change: Change<firestore.DocumentSnapshot>): Readonly<WaitablePromise<unknown>> {
   if (!change.after.exists) {
     return removeObject(change.before.id, index);
   }

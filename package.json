@@ -44,7 +44,6 @@
     "@typescript-eslint/parser": "^4.22.0",
     "chai": "^4.3.4",
     "eslint": "^7.21.0",
-    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-chai-expect": "^2.2.0",
     "eslint-plugin-chai-friendly": "^0.6.0",
     "firebase-functions-test": "^0.2.0",

@@ -49,7 +49,7 @@
     "firebase-functions-test": "^0.2.0",
     "mocha": "^8.3.1",
     "nyc": "^15.1.0",
-    "sinon": "^10.0.0",
+    "sinon": "^11.0.0",
     "sinon-chai": "^3.6.0",
     "ts-node": "^10.0.0",
     "ts-sinon": "^2.0.1",

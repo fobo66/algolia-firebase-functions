@@ -1,0 +1,36 @@
+# This workflow will do a clean install of node dependencies, build the source code and run coverage analysis to upload to Codacy
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Coverage
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches-ignore:
+      - 'dependabot/**'
+
+jobs:
+  coverage:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+    - run: npm run coverage
+    - name: Run codacy-coverage-reporter
+      uses: codacy/codacy-coverage-reporter-action@v1
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        coverage-reports: coverage/lcov.info
+    
+    env:
+      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}

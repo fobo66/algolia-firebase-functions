@@ -7,11 +7,7 @@ on:
   push:
     branches:
       - main
-    branches-ignore:
-      - 'dependabot/**'
   pull_request:
-    branches:
-      - main
     branches-ignore:
       - 'dependabot/**'
 

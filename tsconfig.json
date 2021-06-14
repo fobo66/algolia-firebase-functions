@@ -5,7 +5,8 @@
       "module": "CommonJS",
       "moduleResolution": "node",
       "types": ["node", "mocha"],
-      "target": "es6"
+      "lib": ["es2018"],
+      "target": "es2018"
     },
     "files": ["index.ts"],
     "exclude": ["node_modules"]

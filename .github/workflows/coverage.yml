@@ -8,8 +8,8 @@ on:
     branches:
       - main
   pull_request:
-    branches-ignore:
-      - 'dependabot/**'
+    paths:
+      - '**.ts'
 
 jobs:
   coverage:

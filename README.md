@@ -8,7 +8,7 @@ Useful library to keep your Firebase Database of Firebase Cloud Firestore data i
 
 Starting from version 2.0, this library supports Cloud Functions v1.0. If you need to support beta Cloud Functions, use version 1.0.3 instead.
 
-Starting from version 4.0.0, this library supports Node 10 and no longer supports Node 8. If you still need to support Node 8, use version 3.3.0 instead.
+Starting from version 4.0.0, this library supports Node >= 10 and no longer supports Node 8. If you still need to support Node 8, use version 3.3.0 instead.
 
 ## Installation
 

@@ -37,8 +37,9 @@ const hasManyObjects = (dataVal: unknown): boolean => {
  * To keep objects in sync, we specify objectID by ourselves
  *
  * @param {string} id - Firebase Database key or Firestore id
- * @param {Object} data - Child snapshot's data
+ * @param {any} data - Child snapshot's data
  */
+// any is set here to be able to assign objectID to the value explicitly
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const prepareObjectToExporting = (id: string, data: any) => {
   if (hasManyObjects(data)) {
@@ -56,7 +57,7 @@ const prepareObjectToExporting = (id: string, data: any) => {
  * @param {algolia.AlgoliaIndex} index - Algolia index
  */
 function updateExistingOrAddNewFirebaseDatabaseObject(
-  dataSnapshot: DataSnapshot, 
+  dataSnapshot: DataSnapshot,
   index: SearchIndex
 ): Readonly<WaitablePromise<ChunkedBatchResponse>> {
   return index.saveObjects(
@@ -74,9 +75,9 @@ function updateExistingOrAddNewFirestoreObject(
   dataSnapshot: firestore.DocumentSnapshot,
   index: SearchIndex
 ): Readonly<WaitablePromise<ChunkedBatchResponse>> {
-    return index.saveObjects(
-      prepareObjectToExporting(dataSnapshot.id, dataSnapshot.data()),
-    );
+  return index.saveObjects(
+    prepareObjectToExporting(dataSnapshot.id, dataSnapshot.data()),
+  );
 }
 
 /**
@@ -96,8 +97,8 @@ const removeObject = (id: string, index: SearchIndex) => index.deleteObject(id);
  * @param {functions.Change<DataSnapshot>} change - Firebase Realtime database change
  */
 export function syncAlgoliaWithFirebase(
-  index: SearchIndex, 
-  change: Change<DataSnapshot>): Readonly<WaitablePromise<unknown>>  {
+  index: SearchIndex,
+  change: Change<DataSnapshot>): Readonly<WaitablePromise<unknown>> {
   if (!change.after.exists()) {
     return removeObject(change.before.key, index);
   }
@@ -113,7 +114,7 @@ export function syncAlgoliaWithFirebase(
  */
 export function syncAlgoliaWithFirestore(
   index: SearchIndex,
-   change: Change<firestore.DocumentSnapshot>): Readonly<WaitablePromise<unknown>> {
+  change: Change<firestore.DocumentSnapshot>): Readonly<WaitablePromise<unknown>> {
   if (!change.after.exists) {
     return removeObject(change.before.id, index);
   }

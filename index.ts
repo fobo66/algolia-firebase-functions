@@ -14,7 +14,7 @@
 
 import { firestore } from 'firebase-admin';
 import { Change } from 'firebase-functions';
-import { DataSnapshot } from 'firebase-functions/lib/providers/database';
+import { database } from 'firebase-functions/v1';
 import { SearchIndex } from 'algoliasearch';
 import { WaitablePromise } from '@algolia/client-common';
 import { ChunkedBatchResponse } from '@algolia/client-search';
@@ -57,7 +57,7 @@ const prepareObjectToExporting = (id: string, data: any) => {
  * @param {algolia.AlgoliaIndex} index - Algolia index
  */
 function updateExistingOrAddNewFirebaseDatabaseObject(
-  dataSnapshot: DataSnapshot,
+  dataSnapshot: database.DataSnapshot,
   index: SearchIndex
 ): Readonly<WaitablePromise<ChunkedBatchResponse>> {
   return index.saveObjects(
@@ -98,7 +98,7 @@ const removeObject = (id: string, index: SearchIndex) => index.deleteObject(id);
  */
 export function syncAlgoliaWithFirebase(
   index: SearchIndex,
-  change: Change<DataSnapshot>): Readonly<WaitablePromise<unknown>> {
+  change: Change<database.DataSnapshot>): Readonly<WaitablePromise<unknown>> {
   if (!change.after.exists()) {
     return removeObject(change.before.key, index);
   }

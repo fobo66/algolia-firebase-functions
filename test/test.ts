@@ -13,7 +13,7 @@
 //    limitations under the License.
 
 import { SearchIndex } from 'algoliasearch';
-import { DataSnapshot } from 'firebase-functions/lib/providers/database';
+import { database } from 'firebase-functions/v1';
 import * as sinon from 'ts-sinon';
 import * as sinonChai from 'sinon-chai';
 import { expect, use } from 'chai';
@@ -42,7 +42,7 @@ describe('Algolia Firebase Functions', () => {
 
   it('should add new nested objects from Realtime Database to index', () => {
     const fakeChange = functions.database.exampleDataSnapshotChange();
-    fakeChange.after = new DataSnapshot({
+    fakeChange.after = new database.DataSnapshot({
       testKey1: {
         testValue: 'test',
       },
@@ -58,7 +58,7 @@ describe('Algolia Firebase Functions', () => {
 
   it('should delete Realtime Database object from index', () => {
     const fakeChange = functions.database.exampleDataSnapshotChange();
-    fakeChange.after = new DataSnapshot(null);
+    fakeChange.after = new database.DataSnapshot(null);
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeIndex, fakeChange);
 

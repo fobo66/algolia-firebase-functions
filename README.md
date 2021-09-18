@@ -10,6 +10,8 @@ Starting from version 2.0, this library supports Cloud Functions v1.0. If you ne
 
 Starting from version 4.0.0, this library supports Node >= 10 and no longer supports Node 8. If you still need to support Node 8, use version 3.3.0 instead.
 
+Starting from version 4.1.2, this library supports only ES6 modules or Typescript.
+
 ## Installation
 
 In your `functions` directory:
@@ -33,23 +35,31 @@ firebase functions:config:set algolia.index="<YOUR-ALGOLIA-INDEX-NAME>"
 Then, in your functions' `index.js` file, paste the following lines:
 
 ``` js
-const algoliasearch = require('algoliasearch');
-const algoliaFunctions = require('algolia-firebase-functions');
+import { config, database } from 'firebase-functions';
+import admin from 'firebase-admin';
+import algoliasearch from 'algoliasearch';
+import { syncAlgoliaWithFirebase } from 'algolia-firebase-functions';
 
+admin.initializeApp(config().firebase);
 const algolia = algoliasearch(functions.config().algolia.app,
                               functions.config().algolia.key);
 const index = algolia.initIndex(functions.config().algolia.index);
 
-exports.syncAlgoliaWithFirebase = functions.database.ref('/myref/{childRef}').onWrite(
-   (change, context) => algoliaFunctions.syncAlgoliaWithFirebase(index, change);
-);
+
+export const syncAlgoliaFunction = database.ref('/myRef/{childRef}').onWrite(
+   (change, context) => syncAlgoliaWithFirebase(index, change)
+)
+
 ```
 
 If you're using [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/), you can use the following code:
 
 ```js
-exports.syncAlgoliaWithFirestore = functions.firestore.document('/myDocument/{childDocument}').onWrite(
-   (change, context) => algoliaFunctions.syncAlgoliaWithFirestore(index, change);
+import { firestore } from 'firebase-functions';
+import { syncAlgoliaWithFirestore } from 'algolia-firebase-functions';
+
+export const syncAlgoliaFunction = firestore.document('/myDocument/{childDocument}').onWrite(
+   (change, context) => syncAlgoliaWithFirestore(index, change);
 );
 ```
 

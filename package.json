@@ -19,6 +19,11 @@
   "contributors": [
     "Yuri Oliveira <yuri@matsya.io> (https://github.com/yuriploc)"
   ],
+  "keywords": [
+    "algolia",
+    "firebase",
+    "search"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/fobo66/algolia-firebase-functions"

@@ -1,10 +1,10 @@
 {
   "name": "algolia-firebase-functions",
-  "version": "4.1.2",
+  "version": "5.0.0",
   "description": "Cloud Functions for sync Firebase Database with Algolia in real time",
   "license": "Apache-2.0",
   "engines": {
-    "node": ">= 10"
+    "node": ">= 14"
   },
   "files": [
     "dist"

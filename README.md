@@ -12,6 +12,8 @@ Starting from version 4.0.0, this library supports Node >= 10 and no longer supp
 
 Starting from version 4.1.2, this library supports only ES6 modules or Typescript.
 
+Starting from version 5.0.0, this library supports Node >= 14 and no longer supports Node 10 and 12. If you still need to support Node 10 or 12, use version 4.1.2 instead.
+
 ## Installation
 
 In your `functions` directory:

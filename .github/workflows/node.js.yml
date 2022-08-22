@@ -24,6 +24,13 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Cache
+      uses: actions/cache@v3.0.8
+      with:
+        # A list of files, directories, and wildcard patterns to cache and restore
+        path: node_modules
+        # An explicit key for restoring and saving the cache
+        key: v1
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test

@@ -14,7 +14,7 @@
 
 import { firestore } from 'firebase-admin';
 import { Change } from 'firebase-functions';
-import { DataSnapshot } from 'firebase-functions/lib/providers/database';
+import { DataSnapshot } from 'firebase-functions/v2/database';
 import { SearchIndex } from 'algoliasearch';
 import { WaitablePromise } from '@algolia/client-common';
 import { ChunkedBatchResponse } from '@algolia/client-search';

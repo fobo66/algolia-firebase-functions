@@ -13,13 +13,13 @@
 //    limitations under the License.
 
 import { SearchIndex } from 'algoliasearch';
-import { DataSnapshot } from 'firebase-functions/lib/providers/database';
 import * as sinon from 'ts-sinon';
 import * as sinonChai from 'sinon-chai';
 import { expect, use } from 'chai';
 
 import * as functionsTest from 'firebase-functions-test';
 import * as algoliaFirebaseFunctions from '../index';
+import { DataSnapshot } from 'firebase-functions/v2/database';
 
 const functions = functionsTest();
 

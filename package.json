@@ -56,7 +56,7 @@
     "firebase-functions-test": "3.0.0",
     "mocha": "10.1.0",
     "nyc": "15.1.0",
-    "sinon": "14.0.1",
+    "sinon": "14.0.2",
     "sinon-chai": "3.7.0",
     "ts-node": "10.9.1",
     "ts-sinon": "2.0.2",

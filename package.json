@@ -54,7 +54,7 @@
     "eslint-plugin-chai-expect": "3.0.0",
     "eslint-plugin-chai-friendly": "0.7.2",
     "firebase-functions-test": "3.0.0",
-    "mocha": "10.1.0",
+    "mocha": "10.2.0",
     "nyc": "15.1.0",
     "sinon": "15.0.0",
     "sinon-chai": "3.7.0",

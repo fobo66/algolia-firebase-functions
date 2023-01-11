@@ -1,6 +1,6 @@
 {
   "name": "algolia-firebase-functions",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Cloud Functions for sync Firebase Database with Algolia in real time",
   "license": "Apache-2.0",
   "engines": {
@@ -13,7 +13,7 @@
   "types": "dist/index.d.ts",
   "author": {
     "name": "Andrey Mukamolov",
-    "email": "fobo66@protonmail.com",
+    "email": "fobo66@fastmail.com",
     "url": "https://fobo66.dev"
   },
   "contributors": [

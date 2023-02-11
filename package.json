@@ -50,7 +50,7 @@
     "@typescript-eslint/eslint-plugin": "5.51.0",
     "@typescript-eslint/parser": "5.51.0",
     "chai": "4.3.7",
-    "eslint": "8.33.0",
+    "eslint": "8.34.0",
     "eslint-plugin-chai-expect": "3.0.0",
     "eslint-plugin-chai-friendly": "0.7.2",
     "firebase-functions-test": "3.0.0",

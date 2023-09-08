@@ -1,6 +1,6 @@
 {
   "name": "algolia-firebase-functions",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Cloud Functions for sync Firebase Database with Algolia in real time",
   "license": "Apache-2.0",
   "engines": {

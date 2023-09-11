@@ -13,7 +13,7 @@
 //    limitations under the License.
 
 import { SearchIndex } from 'algoliasearch';
-import { expect, test, describe, spyOn } from "bun:test";
+import { expect, test, describe } from "bun:test";
 import * as sinon from 'ts-sinon';
 
 import * as algoliaFirebaseFunctions from '../index';

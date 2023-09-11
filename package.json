@@ -34,9 +34,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
-    "ci-test": "npm install && npm run test",
-    "test": "nyc mocha --reporter spec  --require ts-node/register test/test.ts --exit",
-    "coverage": "nyc report --reporter=lcov"
+    "ci-test": "npm install && npm run test"
   },
   "dependencies": {
     "algoliasearch": "^4.8.6",

@@ -63,7 +63,6 @@ describe('Algolia Firebase Functions', () => {
   test('should add new objects from Firestore to index', () => {
     const fakeIndex: sinon.StubbedInstance<SearchIndex> = sinon.stubInterface<SearchIndex>()
     const fakeChange = firestore.exampleDocumentSnapshotChange();
-    const saveObjects = spyOn(fakeIndex.saveObjects, "saveObjects");
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeIndex, fakeChange);
 

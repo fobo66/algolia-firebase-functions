@@ -21,7 +21,7 @@ jobs:
     - name: Setup Bun
       uses: oven-sh/setup-bun@v1
       with:
-        bun-version: latest
+        bun-version: canary
     - run: bun test --coverage
     - name: Run codacy-coverage-reporter
       uses: codacy/codacy-coverage-reporter-action@v1

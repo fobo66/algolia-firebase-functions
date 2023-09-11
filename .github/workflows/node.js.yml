@@ -19,7 +19,7 @@ jobs:
     - name: Setup Bun
       uses: oven-sh/setup-bun@v1
       with:
-        bun-version: latest
+        bun-version: canary
     - name: Cache
       uses: actions/cache@v3.3.1
       with:

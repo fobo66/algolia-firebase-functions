@@ -49,7 +49,7 @@
     "firebase-functions-test": "3.1.0",
     "mocha": "10.2.0",
     "nyc": "15.1.0",
-    "sinon": "15.2.0",
+    "sinon": "16.0.0",
     "ts-node": "10.9.1",
     "ts-sinon": "2.0.2",
     "typescript": "5.2.2"

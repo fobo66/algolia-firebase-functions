@@ -4,7 +4,7 @@
       "allowJs": true,
       "module": "CommonJS",
       "moduleResolution": "node",
-      "types": ["node", "mocha"],
+      "types": ["node"],
       "lib": ["es2018"],
       "target": "es2018",
       "declaration": true
@@ -12,4 +12,3 @@
     "files": ["index.ts"],
     "exclude": ["node_modules"]
   }
-  

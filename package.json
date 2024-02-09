@@ -38,7 +38,7 @@
   "dependencies": {
     "algoliasearch": "4.22.1",
     "firebase-admin": "11.11.1",
-    "firebase-functions": "4.6.0"
+    "firebase-functions": "4.7.0"
   },
   "devDependencies": {
     "@types/sinon": "17.0.3",

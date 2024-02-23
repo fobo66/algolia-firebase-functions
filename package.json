@@ -44,7 +44,7 @@
     "@types/sinon": "17.0.3",
     "@typescript-eslint/eslint-plugin": "7.0.2",
     "@typescript-eslint/parser": "7.0.2",
-    "eslint": "8.56.0",
+    "eslint": "8.57.0",
     "firebase-functions-test": "3.1.1",
     "sinon": "17.0.1",
     "ts-node": "10.9.2",

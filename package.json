@@ -36,7 +36,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "algoliasearch": "4.22.1",
+    "algoliasearch": "4.23.3",
     "firebase-admin": "12.1.1",
     "firebase-functions": "5.0.1"
   },

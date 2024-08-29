@@ -13,7 +13,6 @@
 //    limitations under the License.
 
 import { SearchClient } from "@algolia/client-search";
-import { BatchResponse } from 'algoliasearch';
 import { expect, test, describe } from "bun:test";
 import * as sinon from 'ts-sinon';
 

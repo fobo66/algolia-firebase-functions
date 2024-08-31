@@ -14,6 +14,8 @@ Starting from version 4.1.2, this library supports only ES6 modules or Typescrip
 
 Starting from version 5.0.0, this library supports Node >= 14 and no longer supports Node 10 and 12. If you still need to support Node 10 or 12, use version 4.1.2 instead.
 
+Starting from version 6.0.0, this library uses Algolia SDK v5.
+
 ## Installation
 
 In your `functions` directory:
@@ -39,17 +41,17 @@ Then, in your functions' `index.js` file, paste the following lines:
 ``` js
 import { config, database } from 'firebase-functions';
 import admin from 'firebase-admin';
-import algoliasearch from 'algoliasearch';
+import { searchClient } from "@algolia/client-search";
 import { syncAlgoliaWithFirebase } from 'algolia-firebase-functions';
 
 admin.initializeApp(config().firebase);
-const algolia = algoliasearch(functions.config().algolia.app,
+const algolia = searchClient(functions.config().algolia.app,
                               functions.config().algolia.key);
-const index = algolia.initIndex(functions.config().algolia.index);
+const index = functions.config().algolia.index;
 
 
 export const syncAlgoliaFunction = database.ref('/myRef/{childRef}').onWrite(
-   (change, context) => syncAlgoliaWithFirebase(index, change)
+   (change, context) => syncAlgoliaWithFirebase(algolia, index, change)
 )
 
 ```
@@ -61,7 +63,7 @@ import { firestore } from 'firebase-functions';
 import { syncAlgoliaWithFirestore } from 'algolia-firebase-functions';
 
 export const syncAlgoliaFunction = firestore.document('/myDocument/{childDocument}').onWrite(
-   (change, context) => syncAlgoliaWithFirestore(index, change);
+   (change, context) => syncAlgoliaWithFirestore(algolia, index, change);
 );
 ```
 

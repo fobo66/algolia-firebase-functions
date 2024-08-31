@@ -15,8 +15,7 @@
 import { firestore } from 'firebase-admin';
 import { Change } from 'firebase-functions';
 import { DataSnapshot } from 'firebase-functions/v2/database';
-import { SearchClient } from "@algolia/client-search";
-import { BatchResponse } from 'algoliasearch';
+import { SearchClient, BatchResponse } from "@algolia/client-search";
 
 /**
  * If a patch updates a nested object,
@@ -96,7 +95,7 @@ function updateExistingOrAddNewFirestoreObject(
  */
 const removeObject = (id: string, client: SearchClient, index: string) => client.deleteObject({
    indexName: index, 
-   objectID: id 
+   objectID: id
   });
 
 /**

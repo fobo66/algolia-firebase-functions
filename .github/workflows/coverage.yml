@@ -22,7 +22,7 @@ jobs:
       uses: oven-sh/setup-bun@v2
       with:
         bun-version: canary
-    - run: bun test --coverage
+    - run: bun test --coverage --coverage-reporter=lcov
     - name: Run codacy-coverage-reporter
       uses: codacy/codacy-coverage-reporter-action@v1
       with:

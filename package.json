@@ -43,8 +43,8 @@
   "devDependencies": {
     "@types/bun": "1.1.8",
     "@types/sinon": "17.0.3",
-    "@typescript-eslint/eslint-plugin": "8.0.0",
-    "@typescript-eslint/parser": "8.0.0",
+    "@typescript-eslint/eslint-plugin": "8.3.0",
+    "@typescript-eslint/parser": "8.3.0",
     "eslint": "9.9.1",
     "firebase-functions-test": "3.3.0",
     "sinon": "18.0.0",

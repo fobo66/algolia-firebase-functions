@@ -12,29 +12,28 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-import { SearchClient } from "@algolia/client-search";
 import { expect, test, describe } from "bun:test";
-import * as sinon from 'ts-sinon';
 
 import * as algoliaFirebaseFunctions from '../index';
 import { DataSnapshot } from 'firebase-functions/v2/database';
 import firebaseFunctionsTest from "firebase-functions-test";
+import { FakeSearchClient } from "./FakeSearchClient";
 
 const { database, firestore } = firebaseFunctionsTest();
 
 describe('Algolia Firebase Functions', () => {
 
   test('should add new objects from Realtime Database to index', () => {
-    const fakeClient: sinon.StubbedInstance<SearchClient> = sinon.stubInterface<SearchClient>()
+    const fakeClient = new FakeSearchClient();
     const fakeChange = database.exampleDataSnapshotChange();
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeClient, "test", fakeChange);
 
-    expect(fakeClient.saveObjects.called).toBe(true);
+    expect(fakeClient.saveObjectsCalled).toBe(true);
   });
 
   test('should add new nested objects from Realtime Database to index', () => {
-    const fakeClient: sinon.StubbedInstance<SearchClient> = sinon.stubInterface<SearchClient>()
+    const fakeClient = new FakeSearchClient();
     const fakeChange = database.exampleDataSnapshotChange();
     fakeChange.after = new DataSnapshot({
       testKey1: {
@@ -47,35 +46,35 @@ describe('Algolia Firebase Functions', () => {
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeClient, "test", fakeChange);
 
-    expect(fakeClient.saveObjects.called).toBe(true);
+    expect(fakeClient.saveObjectsCalled).toBe(true);
   });
 
   test('should delete Realtime Database object from index', () => {
-    const fakeClient: sinon.StubbedInstance<SearchClient> = sinon.stubInterface<SearchClient>()
+    const fakeClient = new FakeSearchClient();
     const fakeChange = database.exampleDataSnapshotChange();
     fakeChange.after = new DataSnapshot(null);
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(fakeClient, "test", fakeChange);
 
-    expect(fakeClient.deleteObject.called).toBe(true);
+    expect(fakeClient.deleteObjectCalled).toBe(true);
   });
 
   test('should add new objects from Firestore to index', () => {
-    const fakeClient: sinon.StubbedInstance<SearchClient> = sinon.stubInterface<SearchClient>()
+    const fakeClient = new FakeSearchClient();
     const fakeChange = firestore.exampleDocumentSnapshotChange();
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeClient, "test", fakeChange);
 
-    expect(fakeClient.saveObjects.called).toBe(true);
+    expect(fakeClient.saveObjectsCalled).toBe(true);
   });
 
   test('should delete Firestore object from index', () => {
-    const fakeClient: sinon.StubbedInstance<SearchClient> = sinon.stubInterface<SearchClient>()
+    const fakeClient = new FakeSearchClient();
     const fakeChange = firestore.exampleDocumentSnapshotChange();
     fakeChange.after = firestore.makeDocumentSnapshot({}, 'records/1234');
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirestore(fakeClient, "test", fakeChange);
 
-    expect(fakeClient.deleteObject.called).toBe(true);
+    expect(fakeClient.deleteObjectCalled).toBe(true);
   });
 });

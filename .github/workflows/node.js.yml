@@ -15,18 +15,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4.1.7
+    - uses: actions/checkout@v4.2.2
     - name: Setup Bun
       uses: oven-sh/setup-bun@v2
       with:
         bun-version: latest
     - name: Cache
-      uses: actions/cache@v4.1.1
+      uses: actions/cache@v4.1.2
       with:
-        # A list of files, directories, and wildcard patterns to cache and restore
         path: node_modules
-        # An explicit key for restoring and saving the cache
-        key: v1
+        key: v1-${{ hashFiles('bun.lockb') }}
+        restore-keys: v1-
     - run: bun install
     - run: bun run lint
     - run: bun test

@@ -15,7 +15,11 @@ const compat = new FlatCompat({
 });
 
 export default [{
-    ignores: ["**/node_modules", "**/dist", "**/coverage"],
+    ignores: [
+        "**/node_modules", 
+        "**/dist", 
+        "**/coverage",
+        "**/test/FakeSearchClient.ts"], // fake class has a lot of unused stuff
 }, ...compat.extends("eslint:recommended", "plugin:@typescript-eslint/recommended"), {
     plugins: {
         "@typescript-eslint": typescriptEslint,

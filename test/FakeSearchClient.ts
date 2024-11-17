@@ -117,7 +117,7 @@ export class FakeSearchClient implements SearchClient {
   }
   deleteObject({ indexName, objectID }: DeleteObjectProps, requestOptions?: RequestOptions): Promise<DeletedAtResponse> {
     this.deleteObjectCalled = true;
-    return Promise.resolve({taskID: 0, deletedAt: ""});
+    return Promise.resolve({ taskID: 0, deletedAt: "" });
   }
   deleteRule({ indexName, objectID, forwardToReplicas }: DeleteRuleProps, requestOptions?: RequestOptions): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");

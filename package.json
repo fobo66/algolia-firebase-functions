@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@algolia/client-search": "5.15.0",
-    "firebase-admin": "12.7.0",
+    "firebase-admin": "13.0.2",
     "firebase-functions": "6.1.0"
   },
   "devDependencies": {

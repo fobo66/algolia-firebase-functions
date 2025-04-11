@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@types/bun": "1.2.9",
-    "@types/sinon": "17.0.3",
+    "@types/sinon": "17.0.4",
     "@typescript-eslint/eslint-plugin": "8.26.1",
     "@typescript-eslint/parser": "8.26.1",
     "eslint": "9.22.0",

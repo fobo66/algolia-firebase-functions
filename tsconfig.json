@@ -5,8 +5,8 @@
       "module": "CommonJS",
       "moduleResolution": "node",
       "types": ["node"],
-      "lib": ["es2018"],
-      "target": "es2018",
+      "lib": ["ES2022"],
+      "target": "ES2022",
       "declaration": true
     },
     "files": ["index.ts"],

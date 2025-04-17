@@ -34,7 +34,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
-    "docs": "npm run build && npx jsdoc -t node_modules/minami dist/index.js"
+    "docs": "npm run build && npx jsdoc -R README.md -t node_modules/minami dist/index.js"
   },
   "dependencies": {
     "@algolia/client-search": "5.23.4",

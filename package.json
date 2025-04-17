@@ -42,7 +42,7 @@
     "firebase-functions": "6.3.2"
   },
   "devDependencies": {
-    "@types/bun": "1.2.9",
+    "@types/bun": "1.2.10",
     "@types/sinon": "17.0.3",
     "@typescript-eslint/eslint-plugin": "8.30.1",
     "@typescript-eslint/parser": "8.30.1",

@@ -42,14 +42,13 @@
     "firebase-functions": "6.3.2"
   },
   "devDependencies": {
+    "@tsconfig/node18": "18.2.4",
     "@types/bun": "1.2.10",
-    "@types/sinon": "17.0.3",
     "@typescript-eslint/eslint-plugin": "8.31.0",
     "@typescript-eslint/parser": "8.31.0",
     "eslint": "9.22.0",
     "firebase-functions-test": "3.4.0",
     "jsdoc": "4.0.4",
-    "sinon": "20.0.0",
     "ts-node": "10.9.2",
     "typescript": "5.8.3"
   }

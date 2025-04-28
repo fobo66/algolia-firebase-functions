@@ -1,14 +1,7 @@
 {
+  "extends": "@tsconfig/node18/tsconfig.json",
     "compilerOptions": {
-      "outDir": "./dist",
-      "lib": ["ES2022"],
-      "module": "node16",
-      "target": "ES2022",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "moduleResolution": "node16"
+      "outDir": "dist",
     },
     "files": ["index.ts"],
-    "exclude": ["node_modules"]
   }

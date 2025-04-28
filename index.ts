@@ -44,9 +44,10 @@ const hasManyObjects = (dataVal: DocumentData | any): boolean => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function prepareObjectToExporting(id: string, data: DocumentData | any) {
   if (hasManyObjects(data)) {
-    return Object.entries(data as Record<string, unknown>).map(
-      (o: [string, unknown]) => ({ objectID: o[0], ...o[1] })
-    );
+    return Object.entries(data as Record<string, unknown>).map((o) => ({
+      objectID: o[0],
+      ...(o[1] as Record<string, unknown>),
+    }));
   }
   const object = data;
   object.objectID = id;
@@ -63,13 +64,13 @@ function prepareObjectToExporting(id: string, data: DocumentData | any) {
 async function updateExistingOrAddNewFirebaseDatabaseObject(
   dataSnapshot: DataSnapshot,
   client: SearchClient,
-  index: string
+  index: string,
 ): Promise<BatchResponse[]> {
   return client.saveObjects({
     indexName: index,
     objects: prepareObjectToExporting(
       dataSnapshot.key ?? "",
-      dataSnapshot.val()
+      dataSnapshot.val(),
     ),
   });
 }
@@ -84,7 +85,7 @@ async function updateExistingOrAddNewFirebaseDatabaseObject(
 async function updateExistingOrAddNewFirestoreObject(
   dataSnapshot: firestore.DocumentSnapshot,
   client: SearchClient,
-  index: string
+  index: string,
 ): Promise<BatchResponse[]> {
   return client.saveObjects({
     indexName: index,
@@ -117,7 +118,7 @@ const removeObject = async (id: string, client: SearchClient, index: string) =>
 export async function syncAlgoliaWithFirebase(
   client: SearchClient,
   index: string,
-  change: Change<DataSnapshot>
+  change: Change<DataSnapshot>,
 ): Promise<unknown> {
   if (!change.after.exists()) {
     return removeObject(change.before.key ?? "", client, index);
@@ -126,7 +127,7 @@ export async function syncAlgoliaWithFirebase(
   return updateExistingOrAddNewFirebaseDatabaseObject(
     change.after,
     client,
-    index
+    index,
   );
 }
 
@@ -140,7 +141,7 @@ export async function syncAlgoliaWithFirebase(
 export async function syncAlgoliaWithFirestore(
   client: SearchClient,
   index: string,
-  change: Change<firestore.DocumentSnapshot>
+  change: Change<firestore.DocumentSnapshot>,
 ): Promise<unknown> {
   if (!change.after.exists) {
     return removeObject(change.before.id, client, index);

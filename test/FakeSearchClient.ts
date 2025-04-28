@@ -3,6 +3,10 @@ import { Transporter, RequestOptions } from "@algolia/client-common";
 
 
 export class FakeSearchClient implements SearchClient {
+  apiKey: string;
+  deleteIndex({ indexName }: DeleteIndexProps, requestOptions?: RequestOptions): Promise<DeletedAtResponse> {
+    throw new Error("Method not implemented.");
+  }
   transporter: Transporter;
   appId: string;
   public saveObjectsCalled: boolean = false;
@@ -109,10 +113,7 @@ export class FakeSearchClient implements SearchClient {
   deleteApiKey({ key }: DeleteApiKeyProps, requestOptions?: RequestOptions): Promise<DeleteApiKeyResponse> {
     throw new Error("Method not implemented.");
   }
-  deleteBy({ indexName, deleteByParams }: DeleteByProps, requestOptions?: RequestOptions): Promise<DeletedAtResponse> {
-    throw new Error("Method not implemented.");
-  }
-  deleteIndex({ indexName }: DeleteIndexProps, requestOptions?: RequestOptions): Promise<DeletedAtResponse> {
+  deleteBy({ indexName, deleteByParams }: DeleteByProps, requestOptions?: RequestOptions): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   deleteObject({ indexName, objectID }: DeleteObjectProps, requestOptions?: RequestOptions): Promise<DeletedAtResponse> {
@@ -140,7 +141,7 @@ export class FakeSearchClient implements SearchClient {
   getDictionarySettings(requestOptions?: RequestOptions): Promise<GetDictionarySettingsResponse> {
     throw new Error("Method not implemented.");
   }
-  getLogs({ offset, length, indexName, type }?: GetLogsProps, requestOptions?: RequestOptions | undefined): Promise<GetLogsResponse> {
+  getLogs({ offset, length, indexName, type }: GetLogsProps, requestOptions?: RequestOptions | undefined): Promise<GetLogsResponse> {
     throw new Error("Method not implemented.");
   }
   getObject({ indexName, objectID, attributesToRetrieve }: GetObjectProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
@@ -170,7 +171,7 @@ export class FakeSearchClient implements SearchClient {
   getUserId({ userID }: GetUserIdProps, requestOptions?: RequestOptions): Promise<UserId> {
     throw new Error("Method not implemented.");
   }
-  hasPendingMappings({ getClusters }?: HasPendingMappingsProps, requestOptions?: RequestOptions | undefined): Promise<HasPendingMappingsResponse> {
+  hasPendingMappings({ getClusters }: HasPendingMappingsProps, requestOptions?: RequestOptions | undefined): Promise<HasPendingMappingsResponse> {
     throw new Error("Method not implemented.");
   }
   listApiKeys(requestOptions?: RequestOptions): Promise<ListApiKeysResponse> {
@@ -179,10 +180,10 @@ export class FakeSearchClient implements SearchClient {
   listClusters(requestOptions?: RequestOptions): Promise<ListClustersResponse> {
     throw new Error("Method not implemented.");
   }
-  listIndices({ page, hitsPerPage }?: ListIndicesProps, requestOptions?: RequestOptions | undefined): Promise<ListIndicesResponse> {
+  listIndices({ page, hitsPerPage }: ListIndicesProps, requestOptions?: RequestOptions | undefined): Promise<ListIndicesResponse> {
     throw new Error("Method not implemented.");
   }
-  listUserIds({ page, hitsPerPage }?: ListUserIdsProps, requestOptions?: RequestOptions | undefined): Promise<ListUserIdsResponse> {
+  listUserIds({ page, hitsPerPage }: ListUserIdsProps, requestOptions?: RequestOptions | undefined): Promise<ListUserIdsResponse> {
     throw new Error("Method not implemented.");
   }
   multipleBatch(batchParams: BatchParams, requestOptions?: RequestOptions): Promise<MultipleBatchResponse> {

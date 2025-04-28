@@ -34,7 +34,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
-    "docs": "npm run build && npx jsdoc -R README.md -t node_modules/minami dist/index.js"
+    "docs": "npm run build && npx jsdoc -R README.md dist/index.js"
   },
   "dependencies": {
     "@algolia/client-search": "5.23.4",
@@ -49,9 +49,7 @@
     "eslint": "9.22.0",
     "firebase-functions-test": "3.4.0",
     "jsdoc": "4.0.4",
-    "minami": "1.2.3",
     "sinon": "20.0.0",
-    "taffydb": "^2.7.3",
     "ts-node": "10.9.2",
     "typescript": "5.8.3"
   }

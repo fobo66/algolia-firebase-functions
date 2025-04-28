@@ -49,6 +49,7 @@
     "eslint": "9.22.0",
     "firebase-functions-test": "3.4.0",
     "jsdoc": "4.0.4",
+    "prettier": "3.5.3",
     "ts-node": "10.9.2",
     "typescript": "5.8.3"
   }

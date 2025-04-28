@@ -12,10 +12,11 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-import { firestore } from 'firebase-admin';
-import { Change } from 'firebase-functions';
-import { DataSnapshot } from 'firebase-functions/v2/database';
+import { firestore } from "firebase-admin";
+import { Change } from "firebase-functions";
+import { DataSnapshot } from "firebase-functions/v2/database";
 import { SearchClient, BatchResponse } from "@algolia/client-search";
+import { DocumentData } from "firebase-admin/firestore";
 
 /**
  * If a patch updates a nested object,
@@ -23,7 +24,9 @@ import { SearchClient, BatchResponse } from "@algolia/client-search";
  * @param {*} dataVal - a JavaScript value from a DataSnapshot
  * @returns {boolean} - if the object is nested or not
  */
-const hasManyObjects = (dataVal: unknown): boolean => {
+// any is coming from Realtime Database
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const hasManyObjects = (dataVal: DocumentData | any): boolean => {
   const val = Object.values(dataVal);
   return val[0] instanceof Object;
 };
@@ -37,16 +40,19 @@ const hasManyObjects = (dataVal: unknown): boolean => {
  * @param {string} id - Firebase Database key or Firestore id
  * @param {any} data - Child snapshot's data
  */
-// any is set here to be able to assign objectID to the value explicitly
+// any is coming from Realtime Database
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const prepareObjectToExporting = (id: string, data: any) => {
+function prepareObjectToExporting(id: string, data: DocumentData | any) {
   if (hasManyObjects(data)) {
-    return Object.entries(data).map((o: unknown) => ({ objectID: o[0], ...o[1] }));
+    return Object.entries(data as Record<string, unknown>).map((o) => ({
+      objectID: o[0],
+      ...(o[1] as Record<string, unknown>),
+    }));
   }
   const object = data;
   object.objectID = id;
   return [object];
-};
+}
 
 /**
  * Convenience wrapper over Algolia's SDK function for saving objects
@@ -55,16 +61,18 @@ const prepareObjectToExporting = (id: string, data: any) => {
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
  */
-function updateExistingOrAddNewFirebaseDatabaseObject(
+async function updateExistingOrAddNewFirebaseDatabaseObject(
   dataSnapshot: DataSnapshot,
   client: SearchClient,
-  index: string
+  index: string,
 ): Promise<BatchResponse[]> {
   return client.saveObjects({
     indexName: index,
-    objects: prepareObjectToExporting(dataSnapshot.key, dataSnapshot.val()),
-  }
-  );
+    objects: prepareObjectToExporting(
+      dataSnapshot.key ?? "",
+      dataSnapshot.val(),
+    ),
+  });
 }
 
 /**
@@ -74,16 +82,15 @@ function updateExistingOrAddNewFirebaseDatabaseObject(
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
  */
-function updateExistingOrAddNewFirestoreObject(
+async function updateExistingOrAddNewFirestoreObject(
   dataSnapshot: firestore.DocumentSnapshot,
   client: SearchClient,
-  index: string
+  index: string,
 ): Promise<BatchResponse[]> {
   return client.saveObjects({
     indexName: index,
     objects: prepareObjectToExporting(dataSnapshot.id, dataSnapshot.data()),
-  }
-  );
+  });
 }
 
 /**
@@ -93,9 +100,10 @@ function updateExistingOrAddNewFirestoreObject(
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
  */
-const removeObject = (id: string, client: SearchClient, index: string) => client.deleteObject({
-   indexName: index, 
-   objectID: id
+const removeObject = async (id: string, client: SearchClient, index: string) =>
+  client.deleteObject({
+    indexName: index,
+    objectID: id,
   });
 
 /**
@@ -107,15 +115,20 @@ const removeObject = (id: string, client: SearchClient, index: string) => client
  * @param {string} index - Algolia index name
  * @param {functions.Change<DataSnapshot>} change - Firebase Realtime database change
  */
-export function syncAlgoliaWithFirebase(
+export async function syncAlgoliaWithFirebase(
   client: SearchClient,
   index: string,
-  change: Change<DataSnapshot>): Promise<unknown> {
+  change: Change<DataSnapshot>,
+): Promise<unknown> {
   if (!change.after.exists()) {
-    return removeObject(change.before.key, client, index);
+    return removeObject(change.before.key ?? "", client, index);
   }
 
-  return updateExistingOrAddNewFirebaseDatabaseObject(change.after, client, index);
+  return updateExistingOrAddNewFirebaseDatabaseObject(
+    change.after,
+    client,
+    index,
+  );
 }
 
 /**
@@ -125,10 +138,11 @@ export function syncAlgoliaWithFirebase(
  * @param {string} index - Algolia index name
  * @param {Change<firestore.DocumentSnapshot>} change - Firestore change
  */
-export function syncAlgoliaWithFirestore(
+export async function syncAlgoliaWithFirestore(
   client: SearchClient,
   index: string,
-  change: Change<firestore.DocumentSnapshot>): Promise<unknown> {
+  change: Change<firestore.DocumentSnapshot>,
+): Promise<unknown> {
   if (!change.after.exists) {
     return removeObject(change.before.id, client, index);
   }

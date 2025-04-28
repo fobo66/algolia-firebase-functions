@@ -101,7 +101,6 @@ import {
   UpdateApiKeyResponse,
   UpdatedAtResponse,
   UpdatedAtWithObjectIdResponse,
-  UpdatedRuleResponse,
   UserId,
   WaitForApiKeyOptions,
   WaitForAppTaskOptions,
@@ -110,10 +109,16 @@ import {
 import { Transporter, RequestOptions } from "@algolia/client-common";
 
 export class FakeSearchClient implements SearchClient {
+  saveRule(
+    { indexName, objectID, rule, forwardToReplicas }: SaveRuleProps,
+    requestOptions?: RequestOptions,
+  ): Promise<UpdatedAtResponse> {
+    throw new Error("Method not implemented.");
+  }
   apiKey: string;
   deleteIndex(
     { indexName }: DeleteIndexProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<DeletedAtResponse> {
     throw new Error("Method not implemented.");
   }
@@ -134,19 +139,19 @@ export class FakeSearchClient implements SearchClient {
   }
   waitForTask(
     { indexName, taskID, maxRetries, timeout }: WaitForTaskOptions,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<GetTaskResponse> {
     throw new Error("Method not implemented.");
   }
   waitForAppTask(
     { taskID, maxRetries, timeout }: WaitForAppTaskOptions,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<GetTaskResponse> {
     throw new Error("Method not implemented.");
   }
   waitForApiKey(
     { operation, key, apiKey, maxRetries, timeout }: WaitForApiKeyOptions,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<GetApiKeyResponse | undefined> {
     throw new Error("Method not implemented.");
   }
@@ -156,7 +161,7 @@ export class FakeSearchClient implements SearchClient {
       browseParams,
       ...browseObjectsOptions
     }: BrowseOptions<BrowseResponse<T>> & BrowseProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<BrowseResponse<T>> {
     throw new Error("Method not implemented.");
   }
@@ -166,7 +171,7 @@ export class FakeSearchClient implements SearchClient {
       searchRulesParams,
       ...browseRulesOptions
     }: BrowseOptions<SearchRulesResponse> & SearchRulesProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SearchRulesResponse> {
     throw new Error("Method not implemented.");
   }
@@ -176,7 +181,7 @@ export class FakeSearchClient implements SearchClient {
       searchSynonymsParams,
       ...browseSynonymsOptions
     }: BrowseOptions<SearchSynonymsResponse> & SearchSynonymsProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SearchSynonymsResponse> {
     throw new Error("Method not implemented.");
   }
@@ -188,20 +193,20 @@ export class FakeSearchClient implements SearchClient {
       waitForTasks,
       batchSize,
     }: ChunkedBatchOptions,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<Array<BatchResponse>> {
     throw new Error("Method not implemented.");
   }
   saveObjects(
     { indexName, objects, waitForTasks }: SaveObjectsOptions,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<BatchResponse[]> {
     this.saveObjectsCalled = true;
     return Promise.resolve([]);
   }
   deleteObjects(
     { indexName, objectIDs, waitForTasks }: DeleteObjectsOptions,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<BatchResponse[]> {
     throw new Error("Method not implemented.");
   }
@@ -212,13 +217,13 @@ export class FakeSearchClient implements SearchClient {
       createIfNotExists,
       waitForTasks,
     }: PartialUpdateObjectsOptions,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<BatchResponse[]> {
     throw new Error("Method not implemented.");
   }
   replaceAllObjects(
     { indexName, objects, batchSize }: ReplaceAllObjectsOptions,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<ReplaceAllObjectsResponse> {
     throw new Error("Method not implemented.");
   }
@@ -227,49 +232,49 @@ export class FakeSearchClient implements SearchClient {
   }
   searchForHits<T>(
     searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<{ results: Array<SearchResponse<T>> }> {
     throw new Error("Method not implemented.");
   }
   searchForFacets(
     searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<{ results: Array<SearchForFacetValuesResponse> }> {
     throw new Error("Method not implemented.");
   }
   addApiKey(
     apiKey: ApiKey,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<AddApiKeyResponse> {
     throw new Error("Method not implemented.");
   }
   addOrUpdateObject(
     { indexName, objectID, body }: AddOrUpdateObjectProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtWithObjectIdResponse> {
     throw new Error("Method not implemented.");
   }
   appendSource(
     source: Source,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<CreatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   assignUserId(
     { xAlgoliaUserID, assignUserIdParams }: AssignUserIdProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<CreatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   batch(
     { indexName, batchWriteParams }: BatchProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<BatchResponse> {
     throw new Error("Method not implemented.");
   }
   batchAssignUserIds(
     { xAlgoliaUserID, batchAssignUserIdsParams }: BatchAssignUserIdsProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<CreatedAtResponse> {
     throw new Error("Method not implemented.");
   }
@@ -278,144 +283,144 @@ export class FakeSearchClient implements SearchClient {
       dictionaryName,
       batchDictionaryEntriesParams,
     }: BatchDictionaryEntriesProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   browse<T>(
     { indexName, browseParams }: BrowseProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<BrowseResponse<T>> {
     throw new Error("Method not implemented.");
   }
   clearObjects(
     { indexName }: ClearObjectsProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   clearRules(
     { indexName, forwardToReplicas }: ClearRulesProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   clearSynonyms(
     { indexName, forwardToReplicas }: ClearSynonymsProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   customDelete(
     { path, parameters }: CustomDeleteProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<Record<string, unknown>> {
     throw new Error("Method not implemented.");
   }
   customGet(
     { path, parameters }: CustomGetProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<Record<string, unknown>> {
     throw new Error("Method not implemented.");
   }
   customPost(
     { path, parameters, body }: CustomPostProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<Record<string, unknown>> {
     throw new Error("Method not implemented.");
   }
   customPut(
     { path, parameters, body }: CustomPutProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<Record<string, unknown>> {
     throw new Error("Method not implemented.");
   }
   deleteApiKey(
     { key }: DeleteApiKeyProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<DeleteApiKeyResponse> {
     throw new Error("Method not implemented.");
   }
   deleteBy(
     { indexName, deleteByParams }: DeleteByProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   deleteObject(
     { indexName, objectID }: DeleteObjectProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<DeletedAtResponse> {
     this.deleteObjectCalled = true;
     return Promise.resolve({ taskID: 0, deletedAt: "" });
   }
   deleteRule(
     { indexName, objectID, forwardToReplicas }: DeleteRuleProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   deleteSource(
     { source }: DeleteSourceProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<DeleteSourceResponse> {
     throw new Error("Method not implemented.");
   }
   deleteSynonym(
     { indexName, objectID, forwardToReplicas }: DeleteSynonymProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<DeletedAtResponse> {
     throw new Error("Method not implemented.");
   }
   getApiKey(
     { key }: GetApiKeyProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<GetApiKeyResponse> {
     throw new Error("Method not implemented.");
   }
   getAppTask(
     { taskID }: GetAppTaskProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<GetTaskResponse> {
     throw new Error("Method not implemented.");
   }
   getDictionaryLanguages(
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<{ [key: string]: Languages }> {
     throw new Error("Method not implemented.");
   }
   getDictionarySettings(
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<GetDictionarySettingsResponse> {
     throw new Error("Method not implemented.");
   }
   getLogs(
     { offset, length, indexName, type }: GetLogsProps,
-    requestOptions?: RequestOptions | undefined
+    requestOptions?: RequestOptions | undefined,
   ): Promise<GetLogsResponse> {
     throw new Error("Method not implemented.");
   }
   getObject(
     { indexName, objectID, attributesToRetrieve }: GetObjectProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<Record<string, unknown>> {
     throw new Error("Method not implemented.");
   }
   getObjects<T>(
     getObjectsParams: GetObjectsParams,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<GetObjectsResponse<T>> {
     throw new Error("Method not implemented.");
   }
   getRule(
     { indexName, objectID }: GetRuleProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<Rule> {
     throw new Error("Method not implemented.");
   }
   getSettings(
     { indexName }: GetSettingsProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SettingsResponse> {
     throw new Error("Method not implemented.");
   }
@@ -424,30 +429,30 @@ export class FakeSearchClient implements SearchClient {
   }
   getSynonym(
     { indexName, objectID }: GetSynonymProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SynonymHit> {
     throw new Error("Method not implemented.");
   }
   getTask(
     { indexName, taskID }: GetTaskProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<GetTaskResponse> {
     throw new Error("Method not implemented.");
   }
   getTopUserIds(
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<GetTopUserIdsResponse> {
     throw new Error("Method not implemented.");
   }
   getUserId(
     { userID }: GetUserIdProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UserId> {
     throw new Error("Method not implemented.");
   }
   hasPendingMappings(
     { getClusters }: HasPendingMappingsProps,
-    requestOptions?: RequestOptions | undefined
+    requestOptions?: RequestOptions | undefined,
   ): Promise<HasPendingMappingsResponse> {
     throw new Error("Method not implemented.");
   }
@@ -459,25 +464,25 @@ export class FakeSearchClient implements SearchClient {
   }
   listIndices(
     { page, hitsPerPage }: ListIndicesProps,
-    requestOptions?: RequestOptions | undefined
+    requestOptions?: RequestOptions | undefined,
   ): Promise<ListIndicesResponse> {
     throw new Error("Method not implemented.");
   }
   listUserIds(
     { page, hitsPerPage }: ListUserIdsProps,
-    requestOptions?: RequestOptions | undefined
+    requestOptions?: RequestOptions | undefined,
   ): Promise<ListUserIdsResponse> {
     throw new Error("Method not implemented.");
   }
   multipleBatch(
     batchParams: BatchParams,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<MultipleBatchResponse> {
     throw new Error("Method not implemented.");
   }
   operationIndex(
     { indexName, operationIndexParams }: OperationIndexProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
@@ -488,49 +493,43 @@ export class FakeSearchClient implements SearchClient {
       attributesToUpdate,
       createIfNotExists,
     }: PartialUpdateObjectProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtWithObjectIdResponse> {
     throw new Error("Method not implemented.");
   }
   removeUserId(
     { userID }: RemoveUserIdProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<RemoveUserIdResponse> {
     throw new Error("Method not implemented.");
   }
   replaceSources(
     { source }: ReplaceSourcesProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<ReplaceSourceResponse> {
     throw new Error("Method not implemented.");
   }
   restoreApiKey(
     { key }: RestoreApiKeyProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<AddApiKeyResponse> {
     throw new Error("Method not implemented.");
   }
   saveObject(
     { indexName, body }: SaveObjectProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SaveObjectResponse> {
-    throw new Error("Method not implemented.");
-  }
-  saveRule(
-    { indexName, objectID, rule, forwardToReplicas }: SaveRuleProps,
-    requestOptions?: RequestOptions
-  ): Promise<UpdatedRuleResponse> {
     throw new Error("Method not implemented.");
   }
   saveRules(
     { indexName, rules, forwardToReplicas, clearExistingRules }: SaveRulesProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   saveSynonym(
     { indexName, objectID, synonymHit, forwardToReplicas }: SaveSynonymProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SaveSynonymResponse> {
     throw new Error("Method not implemented.");
   }
@@ -541,13 +540,13 @@ export class FakeSearchClient implements SearchClient {
       forwardToReplicas,
       replaceExistingSynonyms,
     }: SaveSynonymsProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   search<T>(
     searchMethodParams: SearchMethodParams | LegacySearchMethodProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SearchResponses<T>> {
     throw new Error("Method not implemented.");
   }
@@ -556,7 +555,7 @@ export class FakeSearchClient implements SearchClient {
       dictionaryName,
       searchDictionaryEntriesParams,
     }: SearchDictionaryEntriesProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SearchDictionaryEntriesResponse> {
     throw new Error("Method not implemented.");
   }
@@ -566,49 +565,49 @@ export class FakeSearchClient implements SearchClient {
       facetName,
       searchForFacetValuesRequest,
     }: SearchForFacetValuesProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SearchForFacetValuesResponse> {
     throw new Error("Method not implemented.");
   }
   searchRules(
     { indexName, searchRulesParams }: SearchRulesProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SearchRulesResponse> {
     throw new Error("Method not implemented.");
   }
   searchSingleIndex<T>(
     { indexName, searchParams }: SearchSingleIndexProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SearchResponse<T>> {
     throw new Error("Method not implemented.");
   }
   searchSynonyms(
     { indexName, searchSynonymsParams }: SearchSynonymsProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SearchSynonymsResponse> {
     throw new Error("Method not implemented.");
   }
   searchUserIds(
     searchUserIdsParams: SearchUserIdsParams,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SearchUserIdsResponse> {
     throw new Error("Method not implemented.");
   }
   setDictionarySettings(
     dictionarySettingsParams: DictionarySettingsParams,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   setSettings(
     { indexName, indexSettings, forwardToReplicas }: SetSettingsProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
   updateApiKey(
     { key, apiKey }: UpdateApiKeyProps,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<UpdateApiKeyResponse> {
     throw new Error("Method not implemented.");
   }

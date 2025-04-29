@@ -12,9 +12,9 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-import { firestore } from "firebase-admin";
 import { Change } from "firebase-functions";
 import { DataSnapshot } from "firebase-functions/v2/database";
+import { DocumentSnapshot } from "firebase-functions/v2/firestore";
 import { SearchClient, BatchResponse } from "@algolia/client-search";
 import { DocumentData } from "firebase-admin/firestore";
 
@@ -83,7 +83,7 @@ async function updateExistingOrAddNewFirebaseDatabaseObject(
  * @param {string} index - Algolia index name
  */
 async function updateExistingOrAddNewFirestoreObject(
-  dataSnapshot: firestore.DocumentSnapshot,
+  dataSnapshot: DocumentSnapshot,
   client: SearchClient,
   index: string,
 ): Promise<BatchResponse[]> {
@@ -141,7 +141,7 @@ export async function syncAlgoliaWithFirebase(
 export async function syncAlgoliaWithFirestore(
   client: SearchClient,
   index: string,
-  change: Change<firestore.DocumentSnapshot>,
+  change: Change<DocumentSnapshot>,
 ): Promise<unknown> {
   if (!change.after.exists) {
     return removeObject(change.before.id, client, index);

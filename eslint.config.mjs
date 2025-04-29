@@ -19,6 +19,7 @@ export default [
     ignores: [
       "**/node_modules",
       "**/dist",
+      "**/out",
       "**/coverage",
       "**/test/FakeSearchClient.ts",
     ], // fake class has a lot of unused stuff

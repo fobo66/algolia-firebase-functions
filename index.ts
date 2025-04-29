@@ -38,7 +38,7 @@ const hasManyObjects = (dataVal: DocumentData | any): boolean => {
  * To keep objects in sync, we specify objectID by ourselves
  *
  * @param {string} id - Firebase Database key or Firestore id
- * @param {any} data - Child snapshot's data
+ * @param {DocumentData | any} data - Child snapshot's data
  */
 // any is coming from Realtime Database
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,7 +57,7 @@ function prepareObjectToExporting(id: string, data: DocumentData | any) {
 /**
  * Convenience wrapper over Algolia's SDK function for saving objects
  *
- * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
+ * @param {DataSnapshot} dataSnapshot - Child snapshot
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
  */
@@ -78,7 +78,7 @@ async function updateExistingOrAddNewFirebaseDatabaseObject(
 /**
  * Convenience wrapper over Algolia's SDK function for saving objects
  *
- * @param {functions.firestore.DocumentSnapshot} dataSnapshot - Child snapshot
+ * @param {DocumentSnapshot} dataSnapshot - Child snapshot
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
  */
@@ -113,7 +113,7 @@ const removeObject = async (id: string, client: SearchClient, index: string) =>
  * So, for usability, we return Promise too
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
- * @param {functions.Change<DataSnapshot>} change - Firebase Realtime database change
+ * @param {Change<DataSnapshot>} change - Firebase Realtime database change
  */
 export async function syncAlgoliaWithFirebase(
   client: SearchClient,
@@ -136,7 +136,7 @@ export async function syncAlgoliaWithFirebase(
  * and send changes to Algolia
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
- * @param {Change<firestore.DocumentSnapshot>} change - Firestore change
+ * @param {Change<fDocumentSnapshot>} change - Firestore change
  */
 export async function syncAlgoliaWithFirestore(
   client: SearchClient,

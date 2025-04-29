@@ -1,7 +1,10 @@
 {
-  "extends": ["@tsconfig/strictest/tsconfig.json", "@tsconfig/node18/tsconfig.json"],
-    "compilerOptions": {
-      "outDir": "dist"
-    },
-    "files": ["index.ts"],
-  }
+  "extends": [
+    "@tsconfig/strictest/tsconfig.json",
+    "@tsconfig/node18/tsconfig.json"
+  ],
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "files": ["index.ts"]
+}

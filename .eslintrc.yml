@@ -1,13 +1,13 @@
 root: true
-extends: 
+extends:
   - eslint:recommended
-  - 'plugin:@typescript-eslint/recommended'
-parser: '@typescript-eslint/parser'
+  - "plugin:@typescript-eslint/recommended"
+parser: "@typescript-eslint/parser"
 plugins:
-  - '@typescript-eslint'
+  - "@typescript-eslint"
 env:
   node: true
 rules:
   max-len:
-   - 1
-   - 120 
+    - 1
+    - 120

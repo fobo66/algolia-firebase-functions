@@ -9,31 +9,40 @@ import { FlatCompat } from "@eslint/eslintrc";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
 });
 
-export default [{
+export default [
+  {
     ignores: [
-        "**/node_modules", 
-        "**/dist", 
-        "**/coverage",
-        "**/test/FakeSearchClient.ts"], // fake class has a lot of unused stuff
-}, ...compat.extends("eslint:recommended", "plugin:@typescript-eslint/recommended"), {
+      "**/node_modules",
+      "**/dist",
+      "**/out",
+      "**/coverage",
+      "**/test/FakeSearchClient.ts",
+    ], // fake class has a lot of unused stuff
+  },
+  ...compat.extends(
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+  ),
+  {
     plugins: {
-        "@typescript-eslint": typescriptEslint,
+      "@typescript-eslint": typescriptEslint,
     },
 
     languageOptions: {
-        globals: {
-            ...globals.node,
-        },
+      globals: {
+        ...globals.node,
+      },
 
-        parser: tsParser,
+      parser: tsParser,
     },
 
     rules: {
-        "max-len": [1, 120],
+      "max-len": [1, 120],
     },
-}];
+  },
+];

@@ -12,9 +12,9 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-import { firestore } from "firebase-admin";
 import { Change } from "firebase-functions";
 import { DataSnapshot } from "firebase-functions/v2/database";
+import { DocumentSnapshot } from "firebase-functions/v2/firestore";
 import { SearchClient, BatchResponse } from "@algolia/client-search";
 import { DocumentData } from "firebase-admin/firestore";
 
@@ -38,7 +38,7 @@ const hasManyObjects = (dataVal: DocumentData | any): boolean => {
  * To keep objects in sync, we specify objectID by ourselves
  *
  * @param {string} id - Firebase Database key or Firestore id
- * @param {any} data - Child snapshot's data
+ * @param {DocumentData | any} data - Child snapshot's data
  */
 // any is coming from Realtime Database
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,7 +57,7 @@ function prepareObjectToExporting(id: string, data: DocumentData | any) {
 /**
  * Convenience wrapper over Algolia's SDK function for saving objects
  *
- * @param {functions.database.DataSnapshot} dataSnapshot - Child snapshot
+ * @param {DataSnapshot} dataSnapshot - Child snapshot
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
  */
@@ -78,12 +78,12 @@ async function updateExistingOrAddNewFirebaseDatabaseObject(
 /**
  * Convenience wrapper over Algolia's SDK function for saving objects
  *
- * @param {functions.firestore.DocumentSnapshot} dataSnapshot - Child snapshot
+ * @param {DocumentSnapshot} dataSnapshot - Child snapshot
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
  */
 async function updateExistingOrAddNewFirestoreObject(
-  dataSnapshot: firestore.DocumentSnapshot,
+  dataSnapshot: DocumentSnapshot,
   client: SearchClient,
   index: string,
 ): Promise<BatchResponse[]> {
@@ -113,7 +113,7 @@ const removeObject = async (id: string, client: SearchClient, index: string) =>
  * So, for usability, we return Promise too
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
- * @param {functions.Change<DataSnapshot>} change - Firebase Realtime database change
+ * @param {Change<DataSnapshot>} change - Firebase Realtime database change
  */
 export async function syncAlgoliaWithFirebase(
   client: SearchClient,
@@ -136,12 +136,12 @@ export async function syncAlgoliaWithFirebase(
  * and send changes to Algolia
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
- * @param {Change<firestore.DocumentSnapshot>} change - Firestore change
+ * @param {Change<DocumentSnapshot>} change - Firestore change
  */
 export async function syncAlgoliaWithFirestore(
   client: SearchClient,
   index: string,
-  change: Change<firestore.DocumentSnapshot>,
+  change: Change<DocumentSnapshot>,
 ): Promise<unknown> {
   if (!change.after.exists) {
     return removeObject(change.before.id, client, index);

@@ -136,7 +136,7 @@ export async function syncAlgoliaWithFirebase(
  * and send changes to Algolia
  * @param {SearchClient} client - Algolia client
  * @param {string} index - Algolia index name
- * @param {Change<fDocumentSnapshot>} change - Firestore change
+ * @param {Change<DocumentSnapshot>} change - Firestore change
  */
 export async function syncAlgoliaWithFirestore(
   client: SearchClient,

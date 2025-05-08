@@ -1,48 +1,18 @@
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import globals from "globals";
-import tsParser from "@typescript-eslint/parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import tseslint from "typescript-eslint";
+import json from "@eslint/json";
+import tsdoc from "eslint-plugin-tsdoc";
+import { defineConfig, globalIgnores } from "eslint/config";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
-
-export default [
-  {
-    ignores: [
-      "**/node_modules",
-      "**/dist",
-      "**/out",
-      "**/coverage",
-      "**/test/FakeSearchClient.ts",
-    ], // fake class has a lot of unused stuff
-  },
-  ...compat.extends(
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-  ),
-  {
-    plugins: {
-      "@typescript-eslint": typescriptEslint,
-    },
-
-    languageOptions: {
-      globals: {
-        ...globals.node,
-      },
-
-      parser: tsParser,
-    },
-
-    rules: {
-      "max-len": [1, 120],
-    },
-  },
-];
+export default defineConfig([
+  globalIgnores([
+    "node_modules",
+    "dist",
+    "out",
+    "test/FakeSearchClient.ts" // it has a lot of unused vars, but used only for tests
+  ]),
+  js.configs.recommended,
+  tseslint.configs.recommended,
+  json.configs.recommended,
+  { files: ["**/*.ts"], plugins: { tsdoc }, rules: {"tsdoc/syntax": "warn"} },
+]);

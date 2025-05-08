@@ -21,8 +21,8 @@ import { DocumentData } from "firebase-admin/firestore";
 /**
  * If a patch updates a nested object,
  * it's necessary to parse it to an array
- * @param {*} dataVal - a JavaScript value from a DataSnapshot
- * @returns {boolean} - if the object is nested or not
+ * @param dataVal - a JavaScript value from a DataSnapshot
+ * @returns if the object is nested or not
  */
 // any is coming from Realtime Database
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,8 +37,8 @@ const hasManyObjects = (dataVal: DocumentData | any): boolean => {
  * If not specified, it will generate it automatically
  * To keep objects in sync, we specify objectID by ourselves
  *
- * @param {string} id - Firebase Database key or Firestore id
- * @param {DocumentData | any} data - Child snapshot's data
+ * @param id - Firebase Database key or Firestore id
+ * @param data - Child snapshot's data
  */
 // any is coming from Realtime Database
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,9 +57,9 @@ function prepareObjectToExporting(id: string, data: DocumentData | any) {
 /**
  * Convenience wrapper over Algolia's SDK function for saving objects
  *
- * @param {DataSnapshot} dataSnapshot - Child snapshot
- * @param {SearchClient} client - Algolia client
- * @param {string} index - Algolia index name
+ * @param dataSnapshot - Child snapshot
+ * @param client - Algolia client
+ * @param index - Algolia index name
  */
 async function updateExistingOrAddNewFirebaseDatabaseObject(
   dataSnapshot: DataSnapshot,
@@ -78,9 +78,9 @@ async function updateExistingOrAddNewFirebaseDatabaseObject(
 /**
  * Convenience wrapper over Algolia's SDK function for saving objects
  *
- * @param {DocumentSnapshot} dataSnapshot - Child snapshot
- * @param {SearchClient} client - Algolia client
- * @param {string} index - Algolia index name
+ * @param dataSnapshot - Child snapshot
+ * @param client - Algolia client
+ * @param index - Algolia index name
  */
 async function updateExistingOrAddNewFirestoreObject(
   dataSnapshot: DocumentSnapshot,
@@ -96,9 +96,9 @@ async function updateExistingOrAddNewFirestoreObject(
 /**
  * Convenience wrapper over Algolia's SDK function for deletion of the objects
  *
- * @param {string} id - Firebase Database key or Firestore id
- * @param {SearchClient} client - Algolia client
- * @param {string} index - Algolia index name
+ * @param id - Firebase Database key or Firestore id
+ * @param client - Algolia client
+ * @param index - Algolia index name
  */
 const removeObject = async (id: string, client: SearchClient, index: string) =>
   client.deleteObject({
@@ -111,9 +111,9 @@ const removeObject = async (id: string, client: SearchClient, index: string) =>
  * and send changes to Algolia
  * Firebase Database Cloud Functions by default should return Promise object
  * So, for usability, we return Promise too
- * @param {SearchClient} client - Algolia client
- * @param {string} index - Algolia index name
- * @param {Change<DataSnapshot>} change - Firebase Realtime database change
+ * @param client - Algolia client
+ * @param index - Algolia index name
+ * @param change - Firebase Realtime database change
  */
 export async function syncAlgoliaWithFirebase(
   client: SearchClient,
@@ -134,9 +134,9 @@ export async function syncAlgoliaWithFirebase(
 /**
  * Determine whether it's deletion or update or insert action
  * and send changes to Algolia
- * @param {SearchClient} client - Algolia client
- * @param {string} index - Algolia index name
- * @param {Change<DocumentSnapshot>} change - Firestore change
+ * @param client - Algolia client
+ * @param index - Algolia index name
+ * @param change - Firestore change
  */
 export async function syncAlgoliaWithFirestore(
   client: SearchClient,

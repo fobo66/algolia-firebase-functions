@@ -3,6 +3,7 @@
   "version": "6.0.2",
   "description": "Cloud Functions for sync Firebase Database with Algolia in real time",
   "license": "Apache-2.0",
+  "homepage": "https://fobo66.github.io/algolia-firebase-functions/",
   "engines": {
     "node": ">= 18"
   },

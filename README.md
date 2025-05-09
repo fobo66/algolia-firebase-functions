@@ -2,6 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/algolia-firebase-functions.svg)](https://www.npmjs.com/package/algolia-firebase-functions)
 ![Tests](https://github.com/fobo66/algolia-firebase-functions/workflows/Tests/badge.svg)
+[![Docs](https://img.shields.io/badge/docs-orange)](https://fobo66.github.io/algolia-firebase-functions/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e0db542266204846b3a47018839453f4)](https://www.codacy.com/manual/fobo66/algolia-firebase-functions?utm_source=github.com&utm_medium=referral&utm_content=fobo66/algolia-firebase-functions&utm_campaign=Badge_Grade)
 
 Useful library to keep your [Firebase Database](https://firebase.google.com/docs/database) of [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore) data in sync with [Algolia](https://algolia.com) for easy search.

@@ -15,7 +15,7 @@ Starting from version 4.1.2, this library supports only ES6 modules or Typescrip
 
 Starting from version 5.0.0, this library supports Node >= 14 and no longer supports Node 10 and 12. If you still need to support Node 10 or 12, use version 4.1.2 instead.
 
-Starting from version 6.0.0, this library uses Algolia SDK v5.
+Starting from version 6.0.0, this library uses Algolia SDK v5 and supports Node version 18 and up.
 
 ## Installation
 

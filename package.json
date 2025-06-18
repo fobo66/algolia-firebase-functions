@@ -38,7 +38,7 @@
     "docs": "npx typedoc --out ./out --readme README.md index.ts"
   },
   "dependencies": {
-    "@algolia/client-search": "5.27.0",
+    "@algolia/client-search": "5.28.0",
     "firebase-admin": "13.4.0",
     "firebase-functions": "6.3.2"
   },

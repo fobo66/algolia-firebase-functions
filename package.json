@@ -35,7 +35,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
-    "docs": "npx typedoc --out ./out --readme README.md index.ts"
+    "docs": "typedoc --out ./out --readme README.md index.ts"
   },
   "dependencies": {
     "@algolia/client-search": "5.30.0",

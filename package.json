@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@eslint/js": "9.34.0",
-    "@eslint/json": "0.13.1",
+    "@eslint/json": "0.13.2",
     "@tsconfig/node18": "18.2.4",
     "@tsconfig/strictest": "2.0.5",
     "@types/bun": "1.2.20",

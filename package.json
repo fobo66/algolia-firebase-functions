@@ -47,7 +47,7 @@
     "@eslint/json": "0.13.2",
     "@tsconfig/node18": "18.2.4",
     "@tsconfig/strictest": "2.0.5",
-    "@types/bun": "1.2.21",
+    "@types/bun": "1.2.22",
     "eslint": "9.35.0",
     "eslint-plugin-tsdoc": "0.4.0",
     "firebase-functions-test": "3.4.1",

@@ -17,6 +17,8 @@ Starting from version 5.0.0, this library supports Node >= 14 and no longer supp
 
 Starting from version 6.0.0, this library uses Algolia SDK v5 and supports Node version 18 and up.
 
+Starting from version 7.0.0, this library supports Node version 20 and up.
+
 ## Installation
 
 In your `functions` directory:
@@ -40,7 +42,7 @@ firebase functions:config:set algolia.index="<YOUR-ALGOLIA-INDEX-NAME>"
 Then, in your functions' `index.js` file, paste the following lines:
 
 ```js
-import { config, database } from "firebase-functions";
+import { config, database } from "firebase-functions/v2";
 import admin from "firebase-admin";
 import { searchClient } from "@algolia/client-search";
 import { syncAlgoliaWithFirebase } from "algolia-firebase-functions";
@@ -62,11 +64,11 @@ export const syncAlgoliaFunction = database
 If you're using [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/), you can use the following code:
 
 ```js
-import { firestore } from 'firebase-functions';
+import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { syncAlgoliaWithFirestore } from 'algolia-firebase-functions';
 
-export const syncAlgoliaFunction = firestore.document('/myDocument/{childDocument}').onWrite(
-   (change, context) => syncAlgoliaWithFirestore(algolia, index, change);
+exports.syncAlgoliaFunction = onDocumentWritten('/myDocument/{childDocument}',
+   (event) => syncAlgoliaWithFirestore(algolia, index, event.data);
 );
 ```
 

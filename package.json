@@ -35,7 +35,8 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
-    "docs": "typedoc --out ./out --readme README.md index.ts"
+    "docs": "typedoc --out ./out --readme README.md index.ts",
+    "test": "jest"
   },
   "dependencies": {
     "@algolia/client-search": "5.37.0",
@@ -45,14 +46,18 @@
   "devDependencies": {
     "@eslint/js": "9.36.0",
     "@eslint/json": "0.13.2",
+    "@jest/globals": "30.1.2",
     "@tsconfig/node18": "18.2.4",
     "@tsconfig/strictest": "2.0.6",
     "@types/bun": "1.2.22",
+    "@types/jest": "30.0.0",
     "eslint": "9.36.0",
+    "eslint-plugin-jest": "29.0.1",
     "eslint-plugin-tsdoc": "0.4.0",
     "firebase-functions-test": "3.4.1",
     "globals": "16.4.0",
     "prettier": "3.6.2",
+    "ts-jest": "29.4.4",
     "ts-node": "10.9.2",
     "typedoc": "0.28.13",
     "typescript": "5.9.2",

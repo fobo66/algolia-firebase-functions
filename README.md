@@ -42,7 +42,7 @@ import { syncAlgoliaWithFirebase } from "algolia-firebase-functions";
 
 initializeApp();
 
-const algoliaApp = defineString("ALGOLIA_APP");
+const algoliaApp = defineString("ALGOLIA_APP_ID");
 const algoliaKey = defineString("ALGOLIA_KEY");
 const algoliaIndex = defineString("ALGOLIA_INDEX");
 

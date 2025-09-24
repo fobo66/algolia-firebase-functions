@@ -29,34 +29,30 @@ In your `functions` directory:
 
 ## Usage
 
-To use this library in your Functions, first of all you need to set environmental variables for Algolia to initialize connection. Grab your API keys [here](https://algolia.com/dashboard) first.
-
-Open Terminal, go to your `functions` directory and input these commands:
-
-```bash
-firebase functions:config:set algolia.app="<YOUR-ALGOLIA-APP-ID>"
-firebase functions:config:set algolia.key="<YOUR-ALGOLIA-APP-PUBLIC-KEY>"
-firebase functions:config:set algolia.index="<YOUR-ALGOLIA-INDEX-NAME>"
-```
+To use this library in your Functions, first of all you need to set environmental variables for Algolia to initialize connection. Grab your Algolia credentials [from the dashboard](https://algolia.com/dashboard) first and add them to your `.env` file or enter them during deployment.
 
 Then, in your functions' `index.js` file, paste the following lines:
 
 ```js
 import { onValueWritten } from "firebase-functions/v2/database";
 import { initializeApp } from "firebase-admin/app";
+import { defineString } from "firebase-functions/params";
 import { searchClient } from "@algolia/client-search";
 import { syncAlgoliaWithFirebase } from "algolia-firebase-functions";
 
 initializeApp();
 
+const algoliaApp = defineString("ALGOLIA_APP");
+const algoliaKey = defineString("ALGOLIA_KEY");
+const algoliaIndex = defineString("ALGOLIA_INDEX");
+
 const algolia = searchClient(
-  functions.config().algolia.app,
-  functions.config().algolia.key,
+  algoliaApp.value(),
+  algoliaKey.value(),
 );
-const index = functions.config().algolia.index;
 
 export const syncAlgoliaFunction = onValueWritten("/myRef/{childRef}", (event) =>
-    syncAlgoliaWithFirebase(algolia, index, event.data),
+    syncAlgoliaWithFirebase(algolia, algoliaIndex.value(), event.data),
   );
 ```
 

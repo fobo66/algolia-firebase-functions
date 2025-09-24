@@ -42,22 +42,21 @@ firebase functions:config:set algolia.index="<YOUR-ALGOLIA-INDEX-NAME>"
 Then, in your functions' `index.js` file, paste the following lines:
 
 ```js
-import { config, database } from "firebase-functions/v2";
-import admin from "firebase-admin";
+import { onValueWritten } from "firebase-functions/v2/database";
+import { initializeApp } from "firebase-admin/app";
 import { searchClient } from "@algolia/client-search";
 import { syncAlgoliaWithFirebase } from "algolia-firebase-functions";
 
-admin.initializeApp(config().firebase);
+initializeApp();
+
 const algolia = searchClient(
   functions.config().algolia.app,
   functions.config().algolia.key,
 );
 const index = functions.config().algolia.index;
 
-export const syncAlgoliaFunction = database
-  .ref("/myRef/{childRef}")
-  .onWrite((change, context) =>
-    syncAlgoliaWithFirebase(algolia, index, change),
+export const syncAlgoliaFunction = onValueWritten("/myRef/{childRef}", (event) =>
+    syncAlgoliaWithFirebase(algolia, index, event.data),
   );
 ```
 
@@ -67,7 +66,7 @@ If you're using [Firebase Cloud Firestore](https://firebase.google.com/docs/fire
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { syncAlgoliaWithFirestore } from 'algolia-firebase-functions';
 
-exports.syncAlgoliaFunction = onDocumentWritten('/myDocument/{childDocument}',
+export const syncAlgoliaFunction = onDocumentWritten('/myDocument/{childDocument}',
    (event) => syncAlgoliaWithFirestore(algolia, index, event.data);
 );
 ```

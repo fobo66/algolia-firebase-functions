@@ -17,7 +17,7 @@ Starting from version 5.0.0, this library supports Node >= 14 and no longer supp
 
 Starting from version 6.0.0, this library uses Algolia SDK v5 and supports Node version 18 and up.
 
-Starting from version 7.0.0, this library supports Node version 20 and up.
+Starting from version 7.0.0, this library supports can be used only with v2 Cloud Functions and Node version 20 and up.
 
 ## Installation
 

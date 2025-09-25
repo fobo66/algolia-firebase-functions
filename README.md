@@ -17,6 +17,8 @@ Starting from version 5.0.0, this library supports Node >= 14 and no longer supp
 
 Starting from version 6.0.0, this library uses Algolia SDK v5 and supports Node version 18 and up.
 
+Starting from version 7.0.0, this library supports can be used only with v2 Cloud Functions and Node version 20 and up.
+
 ## Installation
 
 In your `functions` directory:
@@ -27,46 +29,46 @@ In your `functions` directory:
 
 ## Usage
 
-To use this library in your Functions, first of all you need to set environmental variables for Algolia to initialize connection. Grab your API keys [here](https://algolia.com/dashboard) first.
+To use this library in your Functions, first of all you need to set environmental variables for Algolia to initialize connection. Grab your Algolia credentials [from the dashboard](https://algolia.com/dashboard) first and add them to your `.env` file or enter them during deployment.
 
-Open Terminal, go to your `functions` directory and input these commands:
-
-```bash
-firebase functions:config:set algolia.app="<YOUR-ALGOLIA-APP-ID>"
-firebase functions:config:set algolia.key="<YOUR-ALGOLIA-APP-PUBLIC-KEY>"
-firebase functions:config:set algolia.index="<YOUR-ALGOLIA-INDEX-NAME>"
-```
-
-Then, in your functions' `index.js` file, paste the following lines:
+You can configure your AlgoliaSearch client like this:
 
 ```js
-import { config, database } from "firebase-functions";
-import admin from "firebase-admin";
+import { defineString } from "firebase-functions/params";
 import { searchClient } from "@algolia/client-search";
+
+const algoliaApp = defineString("ALGOLIA_APP_ID");
+const algoliaKey = defineString("ALGOLIA_KEY");
+const algoliaIndex = defineString("ALGOLIA_INDEX");
+
+const algolia = searchClient(
+  algoliaApp.value(),
+  algoliaKey.value(),
+);
+```
+
+Then you can set up the function for synchronizing Realtime Database like this:
+
+```js
+import { onValueWritten } from "firebase-functions/v2/database";
+import { initializeApp } from "firebase-admin/app";
 import { syncAlgoliaWithFirebase } from "algolia-firebase-functions";
 
-admin.initializeApp(config().firebase);
-const algolia = searchClient(
-  functions.config().algolia.app,
-  functions.config().algolia.key,
-);
-const index = functions.config().algolia.index;
+initializeApp();
 
-export const syncAlgoliaFunction = database
-  .ref("/myRef/{childRef}")
-  .onWrite((change, context) =>
-    syncAlgoliaWithFirebase(algolia, index, change),
+export const syncAlgoliaFunction = onValueWritten("/myRef/{childRef}", (event) =>
+    syncAlgoliaWithFirebase(algolia, algoliaIndex.value(), event.data),
   );
 ```
 
 If you're using [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/), you can use the following code:
 
 ```js
-import { firestore } from 'firebase-functions';
+import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { syncAlgoliaWithFirestore } from 'algolia-firebase-functions';
 
-export const syncAlgoliaFunction = firestore.document('/myDocument/{childDocument}').onWrite(
-   (change, context) => syncAlgoliaWithFirestore(algolia, index, change);
+export const syncAlgoliaFunction = onDocumentWritten('/myDocument/{childDocument}',
+   (event) => syncAlgoliaWithFirestore(algolia, index, event.data);
 );
 ```
 

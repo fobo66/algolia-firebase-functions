@@ -31,16 +31,11 @@ In your `functions` directory:
 
 To use this library in your Functions, first of all you need to set environmental variables for Algolia to initialize connection. Grab your Algolia credentials [from the dashboard](https://algolia.com/dashboard) first and add them to your `.env` file or enter them during deployment.
 
-Then, in your functions' `index.js` file, paste the following lines:
+You can configure your AlgoliaSearch client like this:
 
 ```js
-import { onValueWritten } from "firebase-functions/v2/database";
-import { initializeApp } from "firebase-admin/app";
 import { defineString } from "firebase-functions/params";
 import { searchClient } from "@algolia/client-search";
-import { syncAlgoliaWithFirebase } from "algolia-firebase-functions";
-
-initializeApp();
 
 const algoliaApp = defineString("ALGOLIA_APP_ID");
 const algoliaKey = defineString("ALGOLIA_KEY");
@@ -50,6 +45,16 @@ const algolia = searchClient(
   algoliaApp.value(),
   algoliaKey.value(),
 );
+```
+
+Then you can set up the function for synchronizing Realtime Database like this:
+
+```js
+import { onValueWritten } from "firebase-functions/v2/database";
+import { initializeApp } from "firebase-admin/app";
+import { syncAlgoliaWithFirebase } from "algolia-firebase-functions";
+
+initializeApp();
 
 export const syncAlgoliaFunction = onValueWritten("/myRef/{childRef}", (event) =>
     syncAlgoliaWithFirebase(algolia, algoliaIndex.value(), event.data),

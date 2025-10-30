@@ -39,7 +39,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algolia/client-search": "5.41.0",
+    "@algolia/client-search": "5.42.0",
     "firebase-admin": "13.5.0",
     "firebase-functions": "6.6.0"
   },

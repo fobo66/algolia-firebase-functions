@@ -21,7 +21,7 @@ jobs:
           node-version: latest
           cache: "npm"
       - run: npm ci
-      - run: npm run test
+      - run: NODE_OPTIONS="--no-experimental-webstorage" npm run test
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@v1
         with:

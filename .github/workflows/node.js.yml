@@ -22,7 +22,7 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npm run lint
-      - run: npm test
+      - run: NODE_OPTIONS="--no-experimental-webstorage" npm test
   build:
     runs-on: ubuntu-latest
     strategy:

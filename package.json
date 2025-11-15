@@ -37,7 +37,7 @@
     "lint": "eslint .",
     "docs": "typedoc --out ./out --readme README.md index.ts",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky init"
   },
   "dependencies": {
     "@algolia/client-search": "5.43.0",
@@ -56,7 +56,7 @@
     "eslint-plugin-tsdoc": "0.5.0",
     "firebase-functions-test": "3.4.1",
     "globals": "16.5.0",
-    "husky": "^9.1.7",
+    "husky": "9.1.7",
     "jest-environment-node": "30.2.0",
     "lint-staged": "^16.2.6",
     "prettier": "3.6.2",
@@ -66,7 +66,7 @@
     "typescript-eslint": "8.46.4"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
+    "*.ts": ["eslint --fix", "prettier --write"],
+    "*.{js,mjs,json,md}": "prettier"
   }
 }

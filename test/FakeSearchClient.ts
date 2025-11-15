@@ -115,7 +115,7 @@ export class FakeSearchClient implements SearchClient {
   ): Promise<UpdatedAtResponse> {
     throw new Error("Method not implemented.");
   }
-  apiKey: string;
+  apiKey: string = "";
   deleteIndex(
     { indexName }: DeleteIndexProps,
     requestOptions?: RequestOptions,
@@ -123,14 +123,14 @@ export class FakeSearchClient implements SearchClient {
     throw new Error("Method not implemented.");
   }
   transporter: Transporter;
-  appId: string;
+  appId: string = "";
   public saveObjectsCalled: boolean = false;
   public deleteObjectCalled: boolean = false;
 
   clearCache(): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  _ua: string;
+  _ua: string = "";
   addAlgoliaAgent(segment: string, version?: string): void {
     throw new Error("Method not implemented.");
   }

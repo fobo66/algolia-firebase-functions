@@ -37,7 +37,7 @@
     "lint": "eslint .",
     "docs": "typedoc --out ./out --readme README.md index.ts",
     "test": "jest",
-    "prepare": "husky init"
+    "prepare": "husky"
   },
   "dependencies": {
     "@algolia/client-search": "5.43.0",
@@ -58,7 +58,7 @@
     "globals": "16.5.0",
     "husky": "9.1.7",
     "jest-environment-node": "30.2.0",
-    "lint-staged": "^16.2.6",
+    "lint-staged": "16.2.6",
     "prettier": "3.6.2",
     "ts-jest": "29.4.5",
     "typedoc": "0.28.14",
@@ -66,7 +66,10 @@
     "typescript-eslint": "8.46.4"
   },
   "lint-staged": {
-    "*.ts": ["eslint --fix", "prettier --write"],
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
     "*.{js,mjs,json,md}": "prettier"
   }
 }

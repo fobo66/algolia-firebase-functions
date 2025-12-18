@@ -40,7 +40,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@algolia/client-search": "5.46.0",
+    "@algolia/client-search": "5.46.1",
     "firebase-admin": "13.6.0",
     "firebase-functions": "7.0.2"
   },

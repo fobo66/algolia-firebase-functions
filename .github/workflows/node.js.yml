@@ -10,7 +10,7 @@ on:
     branches: [main]
 
 jobs:
-  tests:
+  lint:
     runs-on: ubuntu-slim
 
     steps:
@@ -22,6 +22,17 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npm run lint
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6.0.1
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: latest
+          cache: "npm"
+      - run: npm ci
       - run: npm test
   build:
     runs-on: ubuntu-slim

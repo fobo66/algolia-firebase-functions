@@ -51,7 +51,7 @@
     "@tsconfig/node24": "24.0.4",
     "@tsconfig/strictest": "2.0.8",
     "@types/jest": "30.0.0",
-    "eslint": "10.1.0",
+    "eslint": "10.2.0",
     "eslint-plugin-jest": "29.15.1",
     "eslint-plugin-tsdoc": "0.5.2",
     "firebase-functions-test": "3.4.1",

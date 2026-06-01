@@ -3,9 +3,7 @@
     "@tsconfig/strictest/tsconfig.json",
     "@tsconfig/node24/tsconfig.json",
   ],
-  "compilerOptions": {
-    "outDir": "dist",
-    "types": ["node"],
-  },
-  "files": ["index.ts"],
+  "rootDir": ".",
+  "files": ["index.test.ts"],
+  "types": ["node", "jest"],
 }

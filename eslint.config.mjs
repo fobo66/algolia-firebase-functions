@@ -1,7 +1,6 @@
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 import globals from "globals"
-import json from "@eslint/json";
 import tsdoc from "eslint-plugin-tsdoc";
 import pluginJest from "eslint-plugin-jest";
 import { defineConfig, globalIgnores } from "eslint/config";
@@ -15,7 +14,6 @@ export default defineConfig([
   ]),
   js.configs.recommended,
   tseslint.configs.recommended,
-  json.configs.recommended,
   {
 		languageOptions: {
 			globals: {

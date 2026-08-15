@@ -47,7 +47,7 @@
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@jest/globals": "30.4.1",
-    "@tsconfig/node24": "24.0.4",
+    "@tsconfig/node24": "24.0.5",
     "@tsconfig/strictest": "2.0.8",
     "@types/jest": "30.0.0",
     "eslint": "10.8.1",

@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "@jest/globals": "30.4.1",
+    "@jest/globals": "30.5.0",
     "@tsconfig/node24": "24.0.5",
     "@tsconfig/strictest": "2.0.8",
     "@types/jest": "30.0.0",
@@ -56,7 +56,7 @@
     "firebase-functions-test": "3.5.0",
     "globals": "17.11.0",
     "husky": "9.1.7",
-    "jest-environment-node": "30.4.1",
+    "jest-environment-node": "30.5.0",
     "lint-staged": "17.3.0",
     "prettier": "3.9.6",
     "ts-jest": "29.4.12",

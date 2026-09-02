@@ -12,7 +12,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-import { expect, test, describe } from "@jest/globals";
+import { expect, test, describe } from "vitest";
 
 import * as algoliaFirebaseFunctions from "../index";
 import { DataSnapshot } from "firebase-functions/v2/database";

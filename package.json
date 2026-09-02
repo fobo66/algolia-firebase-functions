@@ -35,6 +35,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
+    "format": "prettier --write .",
     "docs": "typedoc --out ./out --readme README.md index.ts",
     "test": "vitest",
     "coverage": "vitest run --coverage",

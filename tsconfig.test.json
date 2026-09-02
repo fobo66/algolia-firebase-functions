@@ -1,9 +1,0 @@
-{
-  "extends": [
-    "@tsconfig/strictest/tsconfig.json",
-    "@tsconfig/node24/tsconfig.json"
-  ],
-  "rootDir": ".",
-  "files": ["index.test.ts"],
-  "types": ["node", "jest"]
-}

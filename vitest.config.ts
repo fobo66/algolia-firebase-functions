@@ -17,8 +17,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     coverage: {
-      exclude: ["FakeSearchClient.ts"],
-      provider: "istanbul",
+      provider: "v8",
       reporter: ["lcov"],
     },
   },

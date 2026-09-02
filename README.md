@@ -41,10 +41,7 @@ const algoliaApp = defineString("ALGOLIA_APP_ID");
 const algoliaKey = defineString("ALGOLIA_KEY");
 const algoliaIndex = defineString("ALGOLIA_INDEX");
 
-const algolia = searchClient(
-  algoliaApp.value(),
-  algoliaKey.value(),
-);
+const algolia = searchClient(algoliaApp.value(), algoliaKey.value());
 ```
 
 Then you can set up the function for synchronizing Realtime Database like this:
@@ -56,9 +53,10 @@ import { syncAlgoliaWithFirebase } from "algolia-firebase-functions";
 
 initializeApp();
 
-export const syncAlgoliaFunction = onValueWritten("/myRef/{childRef}", (event) =>
-    syncAlgoliaWithFirebase(algolia, algoliaIndex.value(), event.data),
-  );
+export const syncAlgoliaFunction = onValueWritten(
+  "/myRef/{childRef}",
+  (event) => syncAlgoliaWithFirebase(algolia, algoliaIndex.value(), event.data),
+);
 ```
 
 If you're using [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/), you can use the following code:

@@ -5,12 +5,7 @@ import tsdoc from "eslint-plugin-tsdoc";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  globalIgnores([
-    "node_modules",
-    "dist",
-    "out",
-    "test/FakeSearchClient.ts", // it has a lot of unused vars, but used only for tests
-  ]),
+  globalIgnores(["node_modules", "dist", "out"]),
   js.configs.recommended,
   tseslint.configs.recommended,
   {

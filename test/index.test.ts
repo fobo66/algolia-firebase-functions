@@ -13,17 +13,18 @@
 //    limitations under the License.
 
 import { expect, test, describe } from "vitest";
+import { mock } from "vitest-mock-extended";
 
 import * as algoliaFirebaseFunctions from "../index";
 import { DataSnapshot } from "firebase-functions/v2/database";
 import firebaseFunctionsTest from "firebase-functions-test";
-import { FakeSearchClient } from "./FakeSearchClient";
+import { SearchClient } from "@algolia/client-search";
 
 const { database, firestore } = firebaseFunctionsTest();
 
 describe("Algolia Firebase Functions", () => {
   test("should add new objects from Realtime Database to index", () => {
-    const fakeClient = new FakeSearchClient();
+    const fakeClient = mock<SearchClient>();
     const fakeChange = database.exampleDataSnapshotChange();
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirebase(
@@ -32,11 +33,11 @@ describe("Algolia Firebase Functions", () => {
       fakeChange,
     );
 
-    expect(fakeClient.saveObjectsCalled).toBe(true);
+    expect(fakeClient.saveObjects).toHaveBeenCalled();
   });
 
   test("should add new nested objects from Realtime Database to index", () => {
-    const fakeClient = new FakeSearchClient();
+    const fakeClient = mock<SearchClient>();
     const fakeChange = database.exampleDataSnapshotChange();
     fakeChange.after = new DataSnapshot({
       testKey1: {
@@ -53,11 +54,11 @@ describe("Algolia Firebase Functions", () => {
       fakeChange,
     );
 
-    expect(fakeClient.saveObjectsCalled).toBe(true);
+    expect(fakeClient.saveObjects).toHaveBeenCalled();
   });
 
   test("should delete Realtime Database object from index", () => {
-    const fakeClient = new FakeSearchClient();
+    const fakeClient = mock<SearchClient>();
     const fakeChange = database.exampleDataSnapshotChange();
     fakeChange.after = new DataSnapshot(null);
 
@@ -67,11 +68,11 @@ describe("Algolia Firebase Functions", () => {
       fakeChange,
     );
 
-    expect(fakeClient.deleteObjectCalled).toBe(true);
+    expect(fakeClient.deleteObject).toHaveBeenCalled();
   });
 
   test("should add new objects from Firestore to index", () => {
-    const fakeClient = new FakeSearchClient();
+    const fakeClient = mock<SearchClient>();
     const fakeChange = firestore.exampleDocumentSnapshotChange();
 
     algoliaFirebaseFunctions.syncAlgoliaWithFirestore(
@@ -80,11 +81,11 @@ describe("Algolia Firebase Functions", () => {
       fakeChange,
     );
 
-    expect(fakeClient.saveObjectsCalled).toBe(true);
+    expect(fakeClient.saveObjects).toHaveBeenCalled();
   });
 
   test("should delete Firestore object from index", () => {
-    const fakeClient = new FakeSearchClient();
+    const fakeClient = mock<SearchClient>();
     const fakeChange = firestore.exampleDocumentSnapshotChange();
     fakeChange.after = firestore.makeDocumentSnapshot({}, "records/1234");
 
@@ -94,6 +95,6 @@ describe("Algolia Firebase Functions", () => {
       fakeChange,
     );
 
-    expect(fakeClient.deleteObjectCalled).toBe(true);
+    expect(fakeClient.deleteObject).toHaveBeenCalled();
   });
 });

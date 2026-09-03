@@ -12,11 +12,11 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-import { Change } from "firebase-functions";
-import { DataSnapshot } from "firebase-functions/v2/database";
-import { DocumentSnapshot } from "firebase-functions/v2/firestore";
-import { SearchClient, BatchResponse } from "@algolia/client-search";
-import { DocumentData } from "firebase-admin/firestore";
+import type { BatchResponse, SearchClient } from '@algolia/client-search'
+import type { DocumentData } from 'firebase-admin/firestore'
+import type { Change } from 'firebase-functions'
+import type { DataSnapshot } from 'firebase-functions/v2/database'
+import type { DocumentSnapshot } from 'firebase-functions/v2/firestore'
 
 /**
  * If a patch updates a nested object,
@@ -24,12 +24,11 @@ import { DocumentData } from "firebase-admin/firestore";
  * @param dataVal - a JavaScript value from a DataSnapshot
  * @returns if the object is nested or not
  */
-// any is coming from Realtime Database
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: <any is coming from Realtime Database>
 const hasManyObjects = (dataVal: DocumentData | any): boolean => {
-  const val = Object.values(dataVal);
-  return val[0] instanceof Object;
-};
+  const val = Object.values(dataVal)
+  return val[0] instanceof Object
+}
 
 /**
  * Forging object for uploading to Algolia
@@ -40,18 +39,17 @@ const hasManyObjects = (dataVal: DocumentData | any): boolean => {
  * @param id - Firebase Database key or Firestore id
  * @param data - Child snapshot's data
  */
-// any is coming from Realtime Database
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: <any is coming from Realtime Database>
 function prepareObjectToExporting(id: string, data: DocumentData | any) {
   if (hasManyObjects(data)) {
     return Object.entries(data as Record<string, unknown>).map((o) => ({
       objectID: o[0],
       ...(o[1] as Record<string, unknown>),
-    }));
+    }))
   }
-  const object = data;
-  object.objectID = id;
-  return [object];
+  const object = data
+  object.objectID = id
+  return [object]
 }
 
 /**
@@ -69,10 +67,10 @@ async function updateExistingOrAddNewFirebaseDatabaseObject(
   return client.saveObjects({
     indexName: index,
     objects: prepareObjectToExporting(
-      dataSnapshot.key ?? "",
+      dataSnapshot.key ?? '',
       dataSnapshot.val(),
     ),
-  });
+  })
 }
 
 /**
@@ -90,7 +88,7 @@ async function updateExistingOrAddNewFirestoreObject(
   return client.saveObjects({
     indexName: index,
     objects: prepareObjectToExporting(dataSnapshot.id, dataSnapshot.data()),
-  });
+  })
 }
 
 /**
@@ -104,7 +102,7 @@ const removeObject = async (id: string, client: SearchClient, index: string) =>
   client.deleteObject({
     indexName: index,
     objectID: id,
-  });
+  })
 
 /**
  * Determine whether it's deletion or update or insert action
@@ -121,14 +119,14 @@ export async function syncAlgoliaWithFirebase(
   change: Change<DataSnapshot>,
 ): Promise<unknown> {
   if (!change.after.exists()) {
-    return removeObject(change.before.key ?? "", client, index);
+    return removeObject(change.before.key ?? '', client, index)
   }
 
   return updateExistingOrAddNewFirebaseDatabaseObject(
     change.after,
     client,
     index,
-  );
+  )
 }
 
 /**
@@ -144,8 +142,8 @@ export async function syncAlgoliaWithFirestore(
   change: Change<DocumentSnapshot>,
 ): Promise<unknown> {
   if (!change.after.exists) {
-    return removeObject(change.before.id, client, index);
+    return removeObject(change.before.id, client, index)
   }
 
-  return updateExistingOrAddNewFirestoreObject(change.after, client, index);
+  return updateExistingOrAddNewFirestoreObject(change.after, client, index)
 }

@@ -12,89 +12,68 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-import { expect, test, describe } from "vitest";
-import { mock } from "vitest-mock-extended";
+import type { SearchClient } from '@algolia/client-search'
+import { DataSnapshot } from 'firebase-functions/v2/database'
+import firebaseFunctionsTest from 'firebase-functions-test'
+import { describe, expect, test } from 'vitest'
+import { mock } from 'vitest-mock-extended'
+import { syncAlgoliaWithFirebase, syncAlgoliaWithFirestore } from '../index'
 
-import * as algoliaFirebaseFunctions from "../index";
-import { DataSnapshot } from "firebase-functions/v2/database";
-import firebaseFunctionsTest from "firebase-functions-test";
-import { SearchClient } from "@algolia/client-search";
+const { database, firestore } = firebaseFunctionsTest()
 
-const { database, firestore } = firebaseFunctionsTest();
+describe('Algolia Firebase Functions', () => {
+  test('should add new objects from Realtime Database to index', () => {
+    const fakeClient = mock<SearchClient>()
+    const fakeChange = database.exampleDataSnapshotChange()
 
-describe("Algolia Firebase Functions", () => {
-  test("should add new objects from Realtime Database to index", () => {
-    const fakeClient = mock<SearchClient>();
-    const fakeChange = database.exampleDataSnapshotChange();
+    syncAlgoliaWithFirebase(fakeClient, 'test', fakeChange)
 
-    algoliaFirebaseFunctions.syncAlgoliaWithFirebase(
-      fakeClient,
-      "test",
-      fakeChange,
-    );
+    expect(fakeClient.saveObjects).toHaveBeenCalled()
+  })
 
-    expect(fakeClient.saveObjects).toHaveBeenCalled();
-  });
-
-  test("should add new nested objects from Realtime Database to index", () => {
-    const fakeClient = mock<SearchClient>();
-    const fakeChange = database.exampleDataSnapshotChange();
+  test('should add new nested objects from Realtime Database to index', () => {
+    const fakeClient = mock<SearchClient>()
+    const fakeChange = database.exampleDataSnapshotChange()
     fakeChange.after = new DataSnapshot({
       testKey1: {
-        testValue: "test",
+        testValue: 'test',
       },
       testKey2: {
-        testValue: "test",
+        testValue: 'test',
       },
-    });
+    })
 
-    algoliaFirebaseFunctions.syncAlgoliaWithFirebase(
-      fakeClient,
-      "test",
-      fakeChange,
-    );
+    syncAlgoliaWithFirebase(fakeClient, 'test', fakeChange)
 
-    expect(fakeClient.saveObjects).toHaveBeenCalled();
-  });
+    expect(fakeClient.saveObjects).toHaveBeenCalled()
+  })
 
-  test("should delete Realtime Database object from index", () => {
-    const fakeClient = mock<SearchClient>();
-    const fakeChange = database.exampleDataSnapshotChange();
-    fakeChange.after = new DataSnapshot(null);
+  test('should delete Realtime Database object from index', () => {
+    const fakeClient = mock<SearchClient>()
+    const fakeChange = database.exampleDataSnapshotChange()
+    fakeChange.after = new DataSnapshot(null)
 
-    algoliaFirebaseFunctions.syncAlgoliaWithFirebase(
-      fakeClient,
-      "test",
-      fakeChange,
-    );
+    syncAlgoliaWithFirebase(fakeClient, 'test', fakeChange)
 
-    expect(fakeClient.deleteObject).toHaveBeenCalled();
-  });
+    expect(fakeClient.deleteObject).toHaveBeenCalled()
+  })
 
-  test("should add new objects from Firestore to index", () => {
-    const fakeClient = mock<SearchClient>();
-    const fakeChange = firestore.exampleDocumentSnapshotChange();
+  test('should add new objects from Firestore to index', () => {
+    const fakeClient = mock<SearchClient>()
+    const fakeChange = firestore.exampleDocumentSnapshotChange()
 
-    algoliaFirebaseFunctions.syncAlgoliaWithFirestore(
-      fakeClient,
-      "test",
-      fakeChange,
-    );
+    syncAlgoliaWithFirestore(fakeClient, 'test', fakeChange)
 
-    expect(fakeClient.saveObjects).toHaveBeenCalled();
-  });
+    expect(fakeClient.saveObjects).toHaveBeenCalled()
+  })
 
-  test("should delete Firestore object from index", () => {
-    const fakeClient = mock<SearchClient>();
-    const fakeChange = firestore.exampleDocumentSnapshotChange();
-    fakeChange.after = firestore.makeDocumentSnapshot({}, "records/1234");
+  test('should delete Firestore object from index', () => {
+    const fakeClient = mock<SearchClient>()
+    const fakeChange = firestore.exampleDocumentSnapshotChange()
+    fakeChange.after = firestore.makeDocumentSnapshot({}, 'records/1234')
 
-    algoliaFirebaseFunctions.syncAlgoliaWithFirestore(
-      fakeClient,
-      "test",
-      fakeChange,
-    );
+    syncAlgoliaWithFirestore(fakeClient, 'test', fakeChange)
 
-    expect(fakeClient.deleteObject).toHaveBeenCalled();
-  });
-});
+    expect(fakeClient.deleteObject).toHaveBeenCalled()
+  })
+})

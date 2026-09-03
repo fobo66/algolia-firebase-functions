@@ -1,11 +1,12 @@
 {
   "extends": [
     "@tsconfig/strictest/tsconfig.json",
-    "@tsconfig/node24/tsconfig.json",
+    "@tsconfig/node24/tsconfig.json"
   ],
   "compilerOptions": {
     "outDir": "dist",
     "types": ["node"],
+    "declaration": true,
   },
-  "files": ["index.ts"],
+  "files": ["index.ts"]
 }

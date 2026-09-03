@@ -50,7 +50,7 @@
     "@eslint/js": "10.0.1",
     "@tsconfig/node24": "24.0.5",
     "@tsconfig/strictest": "2.0.8",
-    "@vitest/coverage-v8": "4.1.11",
+    "@vitest/coverage-v8": "5.0.0",
     "eslint": "10.9.1",
     "eslint-plugin-tsdoc": "0.5.2",
     "firebase-functions-test": "3.5.0",
@@ -61,7 +61,7 @@
     "typedoc": "0.28.20",
     "typescript": "6.0.3",
     "typescript-eslint": "8.69.0",
-    "vitest": "4.1.11",
+    "vitest": "5.0.0",
     "vitest-mock-extended": "5.1.1"
   },
   "lint-staged": {

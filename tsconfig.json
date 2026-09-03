@@ -6,7 +6,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "types": ["node"],
-    "declaration": true,
+    "declaration": true
   },
   "files": ["index.ts"]
 }

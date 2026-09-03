@@ -12,16 +12,19 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-slim
-
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v7.0.1
-      - name: Setup node
-        uses: actions/setup-node@v7
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
         with:
-          node-version: latest
-          cache: "npm"
-      - run: npm ci
-      - run: npm run lint
+          persist-credentials: false
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+      - name: Run Biome
+        run: biome ci .
   tests:
     runs-on: ubuntu-latest
 
@@ -38,7 +41,7 @@ jobs:
     runs-on: ubuntu-slim
     strategy:
       matrix:
-        node: [20, 22, 24]
+        node: [22, 24, 26]
     name: Node ${{ matrix.node }} build
     steps:
       - uses: actions/checkout@v7.0.1

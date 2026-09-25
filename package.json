@@ -45,13 +45,13 @@
     "@biomejs/biome": "2.5.14",
     "@tsconfig/node24": "24.0.5",
     "@tsconfig/strictest": "2.0.8",
-    "@vitest/coverage-v8": "5.0.1",
+    "@vitest/coverage-v8": "5.0.2",
     "firebase-functions-test": "3.5.0",
     "husky": "9.1.7",
     "lint-staged": "17.5.1",
     "typedoc": "0.28.20",
     "typescript": "6.0.3",
-    "vitest": "5.0.1",
+    "vitest": "5.0.2",
     "vitest-mock-extended": "5.1.1"
   },
   "lint-staged": {

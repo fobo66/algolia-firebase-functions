@@ -34,29 +34,29 @@ To use this library in your Functions, first of all you need to set environmenta
 You can configure your AlgoliaSearch client like this:
 
 ```js
-import { defineString } from "firebase-functions/params";
-import { searchClient } from "@algolia/client-search";
+import { defineString } from 'firebase-functions/params'
+import { searchClient } from '@algolia/client-search'
 
-const algoliaApp = defineString("ALGOLIA_APP_ID");
-const algoliaKey = defineString("ALGOLIA_KEY");
-const algoliaIndex = defineString("ALGOLIA_INDEX");
+const algoliaApp = defineString('ALGOLIA_APP_ID')
+const algoliaKey = defineString('ALGOLIA_KEY')
+const algoliaIndex = defineString('ALGOLIA_INDEX')
 
-const algolia = searchClient(algoliaApp.value(), algoliaKey.value());
+const algolia = searchClient(algoliaApp.value(), algoliaKey.value())
 ```
 
 Then you can set up the function for synchronizing Realtime Database like this:
 
 ```js
-import { onValueWritten } from "firebase-functions/v2/database";
-import { initializeApp } from "firebase-admin/app";
-import { syncAlgoliaWithFirebase } from "algolia-firebase-functions";
+import { onValueWritten } from 'firebase-functions/v2/database'
+import { initializeApp } from 'firebase-admin/app'
+import { syncAlgoliaWithFirebase } from 'algolia-firebase-functions'
 
-initializeApp();
+initializeApp()
 
 export const syncAlgoliaFunction = onValueWritten(
-  "/myRef/{childRef}",
+  '/myRef/{childRef}',
   (event) => syncAlgoliaWithFirebase(algolia, algoliaIndex.value(), event.data),
-);
+)
 ```
 
 If you're using [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/), you can use the following code:

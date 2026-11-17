@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.6",
-    "@tsconfig/node26": "26.0.0",
+    "@tsconfig/node26": "26.0.2",
     "@tsconfig/strictest": "2.0.9",
     "@vitest/coverage-v8": "5.1.0",
     "firebase-functions-test": "3.5.0",

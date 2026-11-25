@@ -48,7 +48,7 @@
     "@vitest/coverage-v8": "5.1.1",
     "firebase-functions-test": "3.5.0",
     "husky": "9.1.7",
-    "lint-staged": "17.6.0",
+    "lint-staged": "17.6.2",
     "typedoc": "0.28.20",
     "typescript": "6.0.3",
     "vitest": "5.1.1",
